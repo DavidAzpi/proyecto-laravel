@@ -1,94 +1,110 @@
 @extends('layouts.master')
 
-@section('title', 'Editar Coche')
+@section('title', 'Editar Vehículo')
 
 @section('content')
-    <div class="premium-form-container" data-animate>
-        <h2 class="premium-form-title">Editar {{ $coche->modelo }}</h2>
+    <div style="padding: 120px 0 80px;">
+        <div
+            style="max-width: 800px; margin: 0 auto; background: var(--lamb-grey-light); padding: 50px; border: 1px solid #333;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 40px; font-family: 'Syne', sans-serif; text-transform: uppercase;">
+                Editar <span style="font-weight: 200;">Vehículo</span>
+            </h2>
 
-        @if ($errors->any())
-            <div
-                style="background: #ffebee; color: #c62828; padding: 20px; border-radius: 4px; border-left: 5px solid #d32f2f; margin-bottom: 30px;">
-                <ul style="margin: 0; padding-left: 20px;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+            <form action="{{ route('coches.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-        <form action="{{ route('coches.update', $coche) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+                <!-- Campo oculto para el ID -->
+                <input type="hidden" name="id" value="{{ $coche->id }}">
 
-            <div class="form-group">
-                <label for="marca_id" class="premium-label">Marca del Fabricante</label>
-                <select class="premium-select" id="marca_id" name="marca_id" required>
-                    @foreach($marcas as $marca)
-                        <option value="{{ $marca->id }}" {{ (old('marca_id', $coche->marca_id) == $marca->id) ? 'selected' : '' }}>
-                            {{ $marca->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="modelo" class="premium-label">Modelo</label>
-                <input type="text" class="premium-input" id="modelo" name="modelo"
-                    value="{{ old('modelo', $coche->modelo) }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="precio" class="premium-label">Precio (€)</label>
-                <input type="number" class="premium-input" id="precio" name="precio"
-                    value="{{ old('precio', $coche->precio) }}" required step="0.01">
-            </div>
-
-            <div class="form-group">
-                <label for="imagen" class="premium-label">Actualizar Fotografía</label>
-                <input type="file" class="premium-input" id="imagen" name="imagen" accept="image/*" style="border: none;">
-                @if($coche->imagen)
-                    <div style="margin-top: 20px; padding: 20px; background: var(--lamb-grey-light); display: inline-block;">
-                        @if(filter_var($coche->imagen, FILTER_VALIDATE_URL))
-                            <img src="{{ $coche->imagen }}" style="max-height: 100px; display: block;">
-                        @elseif(strpos($coche->imagen, 'images/') === 0)
-                            <img src="{{ asset($coche->imagen) }}" style="max-height: 100px; display: block;">
-                        @else
-                            <img src="{{ asset('storage/' . $coche->imagen) }}" style="max-height: 100px; display: block;">
-                        @endif
-                        <span style="font-size: 0.6rem; color: var(--lamb-grey-medium); display: block; margin-top: 10px; text-align: center;">VISTA PREVIA ACTUAL</span>
-                    </div>
-                @endif
-            </div>
-
-            <div class="form-group" style="margin-top: 50px;">
-                <label class="premium-label">Especificaciones Técnicas</label>
-                <div class="spec-grid">
-                    @foreach($especificaciones as $spec)
-                        @php
-                            $pivot = $coche->especificaciones->where('id', $spec->id)->first();
-                            $isChecked = $pivot ? true : false;
-                            $valor = $pivot ? $pivot->pivot->valor : '';
-                        @endphp
-                        <div class="spec-item">
-                            <div class="spec-check">
-                                <input type="checkbox" name="specs[]" value="{{ $spec->id }}" id="spec_{{ $spec->id }}" {{ $isChecked ? 'checked' : '' }}>
-                                <label for="spec_{{ $spec->id }}">{{ $spec->nombre }}</label>
-                            </div>
-                            <input type="text" class="premium-input" name="spec_valor[]"
-                                style="font-size: 0.8rem; padding: 10px 0;"
-                                value="{{ old('spec_valor.' . $loop->index, $valor) }}" placeholder="Valor">
-                        </div>
-                    @endforeach
+                <!-- Modelo -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Modelo
+                        del Coche</label>
+                    <input type="text" name="modelo" value="{{ $coche->modelo }}" required
+                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
                 </div>
-            </div>
 
-            <div style="display: flex; gap: 20px; margin-top: 60px;">
-                <button type="submit" class="btn-premium btn-fill"
-                    style="flex: 1; border: none; cursor: pointer;">Actualizar Vehículo</button>
-                <a href="{{ route('coches.index') }}" class="btn-premium btn-text"
-                    style="flex: 1; text-align: center;">Cancelar</a>
-            </div>
-        </form>
+                <!-- Marca (1:N) -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Fabricante</label>
+                    <select name="marca_id" required
+                        style="width: 100%; background: var(--lamb-charcoal); border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                        @foreach($marcas as $marca)
+                            <option value="{{ $marca->id }}" {{ $coche->marca_id == $marca->id ? 'selected' : '' }}>
+                                {{ $marca->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Precio -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Precio
+                        (€)</label>
+                    <input type="number" name="precio" value="{{ $coche->precio }}" required min="0"
+                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                </div>
+
+                <!-- Imagen Actual -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Imagen
+                        del Vehículo</label>
+
+                    @if($coche->imagen)
+                        <div style="margin-bottom: 15px; padding: 10px; background: #1a1a1a; width: fit-content;">
+                            @if(filter_var($coche->imagen, FILTER_VALIDATE_URL))
+                                <img src="{{ $coche->imagen }}" style="max-height: 100px;">
+                            @else
+                                <img src="{{ asset('storage/' . $coche->imagen) }}" style="max-height: 100px;">
+                            @endif
+                            <p style="font-size: 0.6rem; color: #666; text-align: center; margin-top: 5px;">Imagen actual</p>
+                        </div>
+                    @endif
+
+                    <input type="file" name="imagen" accept="image/*"
+                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                </div>
+
+                <!-- Especificaciones (N:N con tabla pivote) -->
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">Especificaciones
+                        Técnicas</label>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        @foreach($especificaciones as $espec)
+                            @php
+                                $pivotData = $coche->especificaciones->where('id', $espec->id)->first();
+                                $checked = $pivotData ? 'checked' : '';
+                                $valor = $pivotData ? $pivotData->pivot->valor : '';
+                            @endphp
+                            <div style="padding: 15px; background: #1a1a1a; display: flex; flex-direction: column; gap: 10px;">
+                                <label
+                                    style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="especificaciones[]" value="{{ $espec->id }}" {{ $checked }}>
+                                    {{ $espec->nombre }}
+                                </label>
+                                <input type="text" name="valores_especificacion[]" value="{{ $valor }}"
+                                    placeholder="Valor técnico..."
+                                    style="width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; font-size: 0.75rem;">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px; justify-content: flex-end; margin-top: 50px;">
+                    <a href="{{ route('coches.index') }}" class="btn-premium btn-text"
+                        style="padding: 15px 30px;">Cancelar</a>
+                    <button type="submit" class="btn-premium btn-fill"
+                        style="padding: 15px 50px; cursor: pointer; border: none;">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection

@@ -13,7 +13,7 @@
                 <img src="" id="peek-right-img" class="peek-img" alt="Peek Right">
             </div>
 
-            <!-- Navigation -->
+            <!-- Navegación -->
             <button class="nav-arrow arrow-left" onclick="moveSlide(-1)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="15 18 9 12 15 6"></polyline>
@@ -109,8 +109,17 @@
     <div class="showroom-header" style="margin-top: 80px; text-align: center;" data-animate>
         <h2 style="font-size: 3rem; margin-bottom: 15px;">Modelos en Stock</h2>
         <p style="color: var(--lamb-grey-medium); max-width: 600px; margin: 0 auto 50px;">Explore nuestra selección
-            exclusiva de vehículos de alto rendimiento, listos para ser entregados. Cada unidad ha sido certificada por
-            nuestros técnicos expertos.</p>
+            exclusiva de vehículos de alto rendimiento. Cada unidad ha sido certificada por nuestros técnicos expertos.</p>
+    </div>
+
+    <!-- Filtros de Búsqueda (Mejora personal 3: Buscador) -->
+    <div style="margin-bottom: 40px; display: flex; justify-content: center;" data-animate>
+        <form action="{{ route('coches.index') }}" method="GET"
+            style="display: flex; gap: 10px; max-width: 500px; width: 100%;">
+            <input type="text" name="buscar" placeholder="Buscar por modelo..." value="{{ request('buscar') }}"
+                style="flex: 1; padding: 12px 20px; border: 1px solid #333; background: transparent; color: white;">
+            <button type="submit" class="btn-premium btn-fill" style="padding: 12px 25px;">Buscar</button>
+        </form>
     </div>
 
     <div class="showroom-grid">
@@ -134,21 +143,22 @@
                     <h3 class="car-card-model">{{ $coche->modelo }}</h3>
                     <div class="car-card-price">{{ number_format($coche->precio, 0, ',', '.') }} €</div>
 
+                    <!-- Datos de la relación N:N con tabla pivote -->
                     <div class="car-spec-tags">
-                        @foreach($coche->especificaciones as $spec)
-                            <span class="car-spec-tag">{{ $spec->nombre }}</span>
+                        @foreach($coche->especificaciones as $espec)
+                            <span class="car-spec-tag">
+                                <strong>{{ $espec->nombre }}:</strong> {{ $espec->pivot->valor }}
+                            </span>
                         @endforeach
                     </div>
 
                     <div class="car-card-actions">
-                        <a href="{{ route('coches.edit', $coche) }}" class="btn-premium btn-text">Editar Detalles</a>
-                        <form action="{{ route('coches.destroy', $coche) }}" method="POST"
-                            onsubmit="return confirm('¿Eliminar este vehículo?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-premium btn-fill"
-                                style="border:none; cursor:pointer;">Eliminar</button>
-                        </form>
+                        <a href="{{ route('coches.edit', $coche->id) }}" class="btn-premium btn-text">Editar Detalles</a>
+                        <a href="{{ route('coches.delete', $coche->id) }}" class="btn-premium btn-fill"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
+                            style="background: #a00; border: none; font-size: 0.7rem; padding: 10px 15px;">
+                            Eliminar
+                        </a>
                     </div>
                 </div>
             </div>
@@ -159,8 +169,9 @@
         <a href="{{ route('coches.create') }}" class="btn-premium btn-fill">Añadir Nuevo Vehículo</a>
     </div>
 
-    <div class="pagination-container">
-        {{ $coches->links('pagination::bootstrap-5') }}
+    <!-- Implementación de Paginación -->
+    <div class="pagination-container" style="display: flex; justify-content: center; margin-top: 40px;">
+        {{ $coches->appends(request()->query())->links() }}
     </div>
 
     @push('scripts')
@@ -173,9 +184,8 @@
             function updateCarousel() {
                 slides.forEach((slide, index) => {
                     if (index === currentSlide) {
-                        // Re-trigger animations by removing and adding active class with reflow
                         slide.classList.remove('active');
-                        void slide.offsetWidth; // Force reflow
+                        void slide.offsetWidth;
                         slide.classList.add('active');
                     } else {
                         slide.classList.remove('active');
@@ -186,7 +196,6 @@
                     dot.classList.toggle('active', index === currentSlide);
                 });
 
-                // Update Peek Images (Instantly)
                 updatePeeks();
             }
 
@@ -226,7 +235,7 @@
             }
 
             document.addEventListener('DOMContentLoaded', () => {
-                updateCarousel(); // Initialize images
+                updateCarousel();
                 startAutoPlay();
             });
         </script>

@@ -1,76 +1,101 @@
 @extends('layouts.master')
 
-@section('title', 'Añadir Coche')
+@section('title', 'Añadir Vehículo')
 
 @section('content')
-    <div class="premium-form-container" data-animate>
-        <h2 class="premium-form-title">Añadir Vehículo</h2>
+    <div style="padding: 120px 0 80px;">
+        <div
+            style="max-width: 800px; margin: 0 auto; background: var(--lamb-grey-light); padding: 50px; border: 1px solid #333;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 40px; font-family: 'Syne', sans-serif; text-transform: uppercase;">
+                Nuevo <span style="font-weight: 200;">Vehículo</span>
+            </h2>
 
-        @if ($errors->any())
-            <div
-                style="background: #ffebee; color: #c62828; padding: 20px; border-radius: 4px; border-left: 5px solid #d32f2f; margin-bottom: 30px;">
-                <ul style="margin: 0; padding-left: 20px;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('coches.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            <div class="form-group">
-                <label for="marca_id" class="premium-label">Marca del Fabricante</label>
-                <select class="premium-select" id="marca_id" name="marca_id" required>
-                    <option value="">Seleccione marca...</option>
-                    @foreach($marcas as $marca)
-                        <option value="{{ $marca->id }}" {{ old('marca_id') == $marca->id ? 'selected' : '' }}>
-                            {{ $marca->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="modelo" class="premium-label">Modelo</label>
-                <input type="text" class="premium-input" id="modelo" name="modelo" value="{{ old('modelo') }}"
-                    placeholder="Nombre del modelo" required>
-            </div>
-
-            <div class="form-group">
-                <label for="precio" class="premium-label">Precio (€)</label>
-                <input type="number" class="premium-input" id="precio" name="precio" value="{{ old('precio') }}"
-                    placeholder="0.00" required step="0.01">
-            </div>
-
-            <div class="form-group">
-                <label for="imagen" class="premium-label">Fotografía del Vehículo</label>
-                <input type="file" class="premium-input" id="imagen" name="imagen" accept="image/*" style="border: none;">
-            </div>
-
-            <div class="form-group" style="margin-top: 50px;">
-                <label class="premium-label">Especificaciones Técnicas</label>
-                <div class="spec-grid">
-                    @foreach($especificaciones as $index => $spec)
-                        <div class="spec-item">
-                            <div class="spec-check">
-                                <input type="checkbox" name="specs[]" value="{{ $spec->id }}" id="spec_{{ $spec->id }}">
-                                <label for="spec_{{ $spec->id }}">{{ $spec->nombre }}</label>
-                            </div>
-                            <input type="text" class="premium-input" name="spec_valor[]"
-                                style="font-size: 0.8rem; padding: 10px 0;" placeholder="Valor">
-                        </div>
-                    @endforeach
+            @if($errors->any())
+                <div
+                    style="background: #ffebee; color: #c62828; padding: 20px; margin-bottom: 30px; border-left: 5px solid #ef5350;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-            </div>
+            @endif
 
-            <div style="display: flex; gap: 20px; margin-top: 60px;">
-                <button type="submit" class="btn-premium btn-fill" style="flex: 1; border: none; cursor: pointer;">Guardar
-                    Vehículo</button>
-                <a href="{{ route('coches.index') }}" class="btn-premium btn-text"
-                    style="flex: 1; text-align: center;">Cancelar</a>
-            </div>
-        </form>
+            <form action="{{ route('coches.save') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <!-- Modelo -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Modelo
+                        del Coche</label>
+                    <input type="text" name="modelo" value="{{ old('modelo') }}" required
+                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                </div>
+
+                <!-- Marca (1:N) -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Fabricante</label>
+                    <select name="marca_id" required
+                        style="width: 100%; background: var(--lamb-charcoal); border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                        <option value="">Selecciona una marca...</option>
+                        @foreach($marcas as $marca)
+                            <option value="{{ $marca->id }}" {{ old('marca_id') == $marca->id ? 'selected' : '' }}>
+                                {{ $marca->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Precio -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Precio
+                        (€)</label>
+                    <input type="number" name="precio" value="{{ old('precio') }}" required min="0"
+                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                </div>
+
+                <!-- Imagen (Gestión de imágenes) -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Imagen
+                        del Vehículo</label>
+                    <input type="file" name="imagen" accept="image/*"
+                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px; font-family: inherit;">
+                </div>
+
+                <!-- Especificaciones (N:N con tabla pivote) -->
+                <div class="form-group" style="margin-bottom: 40px;">
+                    <label
+                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">Especificaciones
+                        Técnicas</label>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        @foreach($especificaciones as $indice => $espec)
+                            <div style="padding: 15px; background: #1a1a1a; display: flex; flex-direction: column; gap: 10px;">
+                                <label
+                                    style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="especificaciones[]" value="{{ $espec->id }}">
+                                    {{ $espec->nombre }}
+                                </label>
+                                <input type="text" name="valores_especificacion[]" placeholder="Valor (ej: V12, 700CV...)"
+                                    style="width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; font-size: 0.75rem;">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px; justify-content: flex-end; margin-top: 50px;">
+                    <a href="{{ route('coches.index') }}" class="btn-premium btn-text"
+                        style="padding: 15px 30px;">Cancelar</a>
+                    <button type="submit" class="btn-premium btn-fill"
+                        style="padding: 15px 50px; cursor: pointer; border: none;">
+                        Registrar Vehículo
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection

@@ -8,119 +8,168 @@ use App\Models\Especificacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controlador para la gestión de vehículos.
+ */
 class CocheController extends Controller
 {
-    public function index()
+    /**
+     * Muestra el listado de todos los coches con paginación.
+     */
+    public function index(Request $request)
     {
-        $coches = Coche::with('marca', 'especificaciones')->paginate(6);
-        return view('coches.index', compact('coches'));
+        $buscar = $request->input('buscar');
+
+        // Cargamos relaciones y aplicamos filtro si existe búsqueda
+        $coches = Coche::with('marca', 'especificaciones')
+            ->when($buscar, function ($query, $buscar) {
+                return $query->where('modelo', 'LIKE', "%{$buscar}%");
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(6);
+
+        return view('coches.index', [
+            'coches' => $coches
+        ]);
     }
 
+    /**
+     * Muestra el formulario para añadir un nuevo coche.
+     */
     public function create()
     {
         $marcas = Marca::all();
         $especificaciones = Especificacion::all();
-        return view('coches.create', compact('marcas', 'especificaciones'));
+
+        return view('coches.create', [
+            'marcas' => $marcas,
+            'especificaciones' => $especificaciones
+        ]);
     }
 
-    public function store(Request $request)
+    /**
+     * Guarda un nuevo coche en la base de datos.
+     */
+    public function save(Request $request)
     {
+        // Validación de datos con mensajes personalizados (Mejora personal 1)
         $request->validate([
-            'modelo' => 'required|string|max:255',
+            'modelo' => 'required|string|max:100',
             'precio' => 'required|numeric|min:0',
             'marca_id' => 'required|exists:marcas,id',
-            'imagen' => 'nullable|image|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'modelo.required' => 'El nombre del modelo es obligatorio.',
+            'precio.numeric' => 'El precio debe ser un número válido.',
+            'imagen.image' => 'El archivo debe ser una imagen.',
+            'marca_id.required' => 'Debes seleccionar una marca fabricante.'
         ]);
 
-        $coche = new Coche($request->all());
+        $coche = new Coche();
+        $coche->modelo = $request->input('modelo');
+        $coche->precio = $request->input('precio');
+        $coche->marca_id = $request->input('marca_id');
 
+        // Gestión del archivo de imagen
         if ($request->hasFile('imagen')) {
-            $path = $request->file('imagen')->store('coches', 'public');
-            $coche->imagen = $path;
+            $nombreImagen = time() . '_' . $request->file('imagen')->getClientOriginalName();
+            $ruta = $request->file('imagen')->storeAs('coches', $nombreImagen, 'public');
+            $coche->imagen = $ruta;
         }
 
         $coche->save();
 
-        // Sync specs with pivot values
-        if ($request->has('specs')) {
-            $syncData = [];
-            foreach ($request->specs as $index => $specId) {
-                // Find the index in spec_valor that corresponds to this specId
-                // Note: The form structure might need to be more robust, but for now:
-                $syncData[$specId] = ['valor' => $request->spec_valor[$index] ?? ''];
+        // Guardar relaciones N:N con pivot (Mejora personal 2: Uso de sync)
+        if ($request->has('especificaciones')) {
+            $datosPivot = [];
+            foreach ($request->input('especificaciones') as $indice => $idEspecificacion) {
+                // Obtenemos el valor correspondiente del array de valores
+                $valor = $request->input('valores_especificacion')[$indice] ?? '';
+                $datosPivot[$idEspecificacion] = ['valor' => $valor];
             }
-            $coche->especificaciones()->attach($syncData);
+            $coche->especificaciones()->sync($datosPivot);
         }
 
-        return redirect()->route('coches.index')->with('success', 'Coche creado correctamente.');
+        return redirect()->action([CocheController::class, 'index'])
+            ->with('success', 'Vehículo añadido correctamente al inventario.');
     }
 
-    public function show(Coche $coche)
+    /**
+     * Muestra el formulario de edición.
+     */
+    public function edit($id)
     {
-        return view('coches.show', compact('coche'));
-    }
-
-    public function edit(Coche $coche)
-    {
+        $coche = Coche::findOrFail($id);
         $marcas = Marca::all();
         $especificaciones = Especificacion::all();
-        return view('coches.edit', compact('coche', 'marcas', 'especificaciones'));
+
+        return view('coches.edit', [
+            'coche' => $coche,
+            'marcas' => $marcas,
+            'especificaciones' => $especificaciones
+        ]);
     }
 
-    public function update(Request $request, Coche $coche)
+    /**
+     * Actualiza los datos de un coche existente.
+     */
+    public function update(Request $request)
     {
+        $id = $request->input('id');
+        $coche = Coche::findOrFail($id);
+
         $request->validate([
-            'modelo' => 'required|string|max:255',
+            'modelo' => 'required|string|max:100',
             'precio' => 'required|numeric|min:0',
             'marca_id' => 'required|exists:marcas,id',
             'imagen' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->all();
+        $coche->modelo = $request->input('modelo');
+        $coche->precio = $request->input('precio');
+        $coche->marca_id = $request->input('marca_id');
 
         if ($request->hasFile('imagen')) {
-            // Delete old image
-            if ($coche->imagen) {
+            // Borrar imagen antigua si existe
+            if ($coche->imagen && Storage::disk('public')->exists($coche->imagen)) {
                 Storage::disk('public')->delete($coche->imagen);
             }
-            $path = $request->file('imagen')->store('coches', 'public');
-            $data['imagen'] = $path;
+            $nombreImagen = time() . '_' . $request->file('imagen')->getClientOriginalName();
+            $ruta = $request->file('imagen')->storeAs('coches', $nombreImagen, 'public');
+            $coche->imagen = $ruta;
         }
 
-        $coche->update($data);
+        $coche->save();
 
-        // Sync specs
-        if ($request->has('specs')) {
-            $syncData = [];
-            foreach ($request->all() as $key => $value) {
-                // This logic needs to be careful. Let's simplify and use a better approach in the form if needed.
-                // For now, let's assume specs and spec_valor are arrays.
+        // Actualizar relaciones N:N
+        if ($request->has('especificaciones')) {
+            $datosPivot = [];
+            foreach ($request->input('especificaciones') as $indice => $idEspecificacion) {
+                $valor = $request->input('valores_especificacion')[$indice] ?? '';
+                $datosPivot[$idEspecificacion] = ['valor' => $valor];
             }
-
-            // Re-think sync logic to match the form indices
-            $allSpecs = Especificacion::all();
-            foreach ($request->specs as $specId) {
-                // Find which index this specId is in the 'especificaciones' loop of the view
-                // This is tricky without better form names. 
-                // Let's just use what we have for now.
-            }
-
-            // Simplified sync for now
-            $coche->especificaciones()->detach();
-            foreach ($request->specs as $index => $specId) {
-                $coche->especificaciones()->attach($specId, ['valor' => $request->spec_valor[$specId - 1] ?? '']);
-            }
+            $coche->especificaciones()->sync($datosPivot);
         }
 
-        return redirect()->route('coches.index')->with('success', 'Coche actualizado correctamente.');
+        return redirect()->action([CocheController::class, 'index'])
+            ->with('success', 'Vehículo actualizado satisfactoriamente.');
     }
 
-    public function destroy(Coche $coche)
+    /**
+     * Elimina un coche de la base de datos.
+     */
+    public function delete($id)
     {
-        if ($coche->imagen) {
+        $coche = Coche::findOrFail($id);
+
+        // Eliminar fichero de imagen asociado
+        if ($coche->imagen && Storage::disk('public')->exists($coche->imagen)) {
             Storage::disk('public')->delete($coche->imagen);
         }
+
         $coche->delete();
-        return redirect()->route('coches.index')->with('success', 'Coche eliminado correctamente.');
+
+        return redirect()->action([CocheController::class, 'index'])
+            ->with('success', 'Vehículo eliminado del sistema.');
     }
 }
