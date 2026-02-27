@@ -9,5 +9,9 @@ Route::get('/', function () {
     return redirect()->route('coches.index');
 });
 
-Route::resource('coches', CocheController::class);
+Route::resource('coches', CocheController::class)->parameters([
+    'coches' => 'coche',
+]);
 Route::resource('marcas', MarcaController::class);
+
+

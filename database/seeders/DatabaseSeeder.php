@@ -50,28 +50,28 @@ class DatabaseSeeder extends Seeder
             // 3. Coches for each Marca
             if ($marca->nombre == 'Ferrari') {
                 $coches = [
-                    ['modelo' => 'SF90 Stradale', 'precio' => 430000, 'imagen' => 'sf90.jpg'],
-                    ['modelo' => '812 Superfast', 'precio' => 339000, 'imagen' => '812.jpg'],
+                    ['modelo' => 'SF90 Stradale', 'precio' => 430000, 'imagen' => 'images/showroom/ferrari_sf90.png'],
+                    ['modelo' => '812 Superfast', 'precio' => 339000, 'imagen' => 'images/showroom/ferrari_812.png'],
                 ];
             } elseif ($marca->nombre == 'Porsche') {
                 $coches = [
-                    ['modelo' => '911 Turbo S', 'precio' => 220000, 'imagen' => '911turbo.jpg'],
-                    ['modelo' => 'Taycan Turbo S', 'precio' => 185000, 'imagen' => 'taycan.jpg'],
+                    ['modelo' => '911 Turbo S', 'precio' => 220000, 'imagen' => 'images/showroom/porsche_911.png'],
+                    ['modelo' => 'Taycan Turbo S', 'precio' => 185000, 'imagen' => 'images/showroom/porsche_taycan.png'],
                 ];
             } elseif ($marca->nombre == 'Lamborghini') {
                 $coches = [
-                    ['modelo' => 'Aventador SVJ', 'precio' => 517000, 'imagen' => 'aventador.jpg'],
-                    ['modelo' => 'Huracán Evo', 'precio' => 210000, 'imagen' => 'huracan.jpg'],
+                    ['modelo' => 'Aventador SVJ', 'precio' => 517000, 'imagen' => 'images/showroom/lamborghini_aventador.png'],
+                    ['modelo' => 'Huracán Evo', 'precio' => 210000, 'imagen' => 'images/showroom/lamborghini_huracan.png'],
                 ];
             } elseif ($marca->nombre == 'McLaren') {
                 $coches = [
-                    ['modelo' => '720S', 'precio' => 284000, 'imagen' => '720s.jpg'],
-                    ['modelo' => 'Artura', 'precio' => 230000, 'imagen' => 'artura.jpg'],
+                    ['modelo' => '720S', 'precio' => 284000, 'imagen' => 'images/showroom/mclaren_720s.png'],
+                    ['modelo' => 'Artura', 'precio' => 230000, 'imagen' => 'images/showroom/mclaren_artura.png'],
                 ];
             } else { // Aston Martin
                 $coches = [
-                    ['modelo' => 'DBS Volante', 'precio' => 310000, 'imagen' => 'dbs.jpg'],
-                    ['modelo' => 'Vantage', 'precio' => 160000, 'imagen' => 'vantage.jpg'],
+                    ['modelo' => 'DBS Volante', 'precio' => 310000, 'imagen' => 'images/showroom/aston_martin_dbs.png'],
+                    ['modelo' => 'Vantage', 'precio' => 160000, 'imagen' => 'images/showroom/aston_martin_vantage.png'],
                 ];
             }
 
