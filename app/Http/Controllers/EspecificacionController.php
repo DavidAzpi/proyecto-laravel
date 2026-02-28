@@ -33,7 +33,7 @@ class EspecificacionController extends Controller
     /**
      * Guardar especificación.
      */
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|unique:especificaciones,nombre',
@@ -45,7 +45,7 @@ class EspecificacionController extends Controller
         $especificacion->descripcion = $request->input('descripcion');
         $especificacion->save();
 
-        return redirect()->action([EspecificacionController::class, 'index'])
+        return redirect()->route('especificaciones.index')
             ->with('success', 'Especificación añadida.');
     }
 
@@ -75,19 +75,19 @@ class EspecificacionController extends Controller
         $especificacion->descripcion = $request->input('descripcion');
         $especificacion->save();
 
-        return redirect()->action([EspecificacionController::class, 'index'])
+        return redirect()->route('especificaciones.index')
             ->with('success', 'Especificación actualizada.');
     }
 
     /**
      * Borrar especificación.
      */
-    public function delete($id)
+    public function destroy($id)
     {
         $especificacion = Especificacion::findOrFail($id);
         $especificacion->delete();
 
-        return redirect()->action([EspecificacionController::class, 'index'])
+        return redirect()->route('especificaciones.index')
             ->with('success', 'Especificación eliminada.');
     }
 }

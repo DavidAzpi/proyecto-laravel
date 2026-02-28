@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Especificación
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Especificacion extends Model
 {
+    use SoftDeletes;
     // Nombre de la tabla explícito
     protected $table = 'especificaciones';
 

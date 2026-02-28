@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Marca
@@ -10,8 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Marca extends Model
 {
+    use SoftDeletes;
+
     // Campos que se pueden rellenar de forma masiva
-    protected $fillable = ['nombre', 'pais', 'logo'];
+    protected $fillable = ['nombre', 'pais', 'logo', 'slogan', 'descripcion'];
 
     /**
      * Relación 1:N con coches.

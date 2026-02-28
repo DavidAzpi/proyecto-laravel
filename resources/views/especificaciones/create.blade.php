@@ -3,40 +3,26 @@
 @section('title', 'Nueva Especificación')
 
 @section('content')
-    <div style="padding: 120px 0 80px;">
-        <div
-            style="max-width: 600px; margin: 0 auto; background: var(--lamb-grey-light); padding: 50px; border: 1px solid #333;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 40px; font-family: 'Syne', sans-serif; text-transform: uppercase;">
-                Nueva <span style="font-weight: 200;">Especificación</span>
-            </h2>
+<div class="premium-form-container" data-animate>
+    <h2 class="premium-form-title">Nueva <span style="font-weight: 200;">Especificación</span></h2>
 
-            <form action="{{ route('especificaciones.save') }}" method="POST">
-                @csrf
-
-                <div class="form-group" style="margin-bottom: 30px;">
-                    <label
-                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Nombre
-                        (ej: Potencia, Motor)</label>
-                    <input type="text" name="nombre" required
-                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px;">
-                </div>
-
-                <div class="form-group" style="margin-bottom: 30px;">
-                    <label
-                        style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--lamb-grey-medium); margin-bottom: 10px;">Descripción</label>
-                    <textarea name="descripcion" rows="4"
-                        style="width: 100%; background: transparent; border: 1px solid #444; color: white; padding: 15px;"></textarea>
-                </div>
-
-                <div style="display: flex; gap: 20px; justify-content: flex-end; margin-top: 50px;">
-                    <a href="{{ route('especificaciones.index') }}" class="btn-premium btn-text"
-                        style="padding: 15px 30px;">Cancelar</a>
-                    <button type="submit" class="btn-premium btn-fill"
-                        style="padding: 15px 50px; cursor: pointer; border: none;">
-                        Guardar
-                    </button>
-                </div>
-            </form>
+    <form action="{{ route('especificaciones.save') }}" method="POST">
+        @csrf
+        
+        <div class="form-group">
+            <label class="premium-label">Título de la Característica</label>
+            <input type="text" name="nombre" class="premium-input" placeholder="Ej: Velocidad Máxima, Tracción..." required>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label class="premium-label">Descripción Detallada</label>
+            <textarea name="descripcion" class="premium-input" rows="4" style="resize: vertical; min-height: 100px;" placeholder="Explique qué representa este valor técnico..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-top: 50px;">
+            <button type="submit" class="btn-premium btn-fill">Crear Registro</button>
+            <a href="{{ route('especificaciones.index') }}" class="btn-premium btn-outline">Volver</a>
+        </div>
+    </form>
+</div>
 @endsection

@@ -34,7 +34,7 @@ class MarcaController extends Controller
     /**
      * Guardar nueva marca.
      */
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|unique:marcas,nombre',
@@ -100,7 +100,7 @@ class MarcaController extends Controller
     /**
      * Borrar marca.
      */
-    public function delete($id)
+    public function destroy($id)
     {
         $marca = Marca::findOrFail($id);
 

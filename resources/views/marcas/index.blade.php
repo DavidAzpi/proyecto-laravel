@@ -4,58 +4,55 @@
 
 @section('content')
     <div style="padding: 120px 0 80px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px;" data-animate>
             <h2 style="font-size: 2.5rem; font-family: 'Syne', sans-serif; text-transform: uppercase;">
                 Nuestras <span style="font-weight: 200;">Marcas</span>
             </h2>
-            <a href="{{ route('marcas.create') }}" class="btn-premium btn-fill">Añadir Marca</a>
+            @if(auth()->user()->rol === 'admin')
+                <a href="{{ route('marcas.create') }}" class="btn-premium btn-fill">Añadir Marca</a>
+            @endif
         </div>
 
-        <div style="overflow-x: auto;">
-            <table
-                style="width: 100%; border-collapse: collapse; background: var(--lamb-grey-light); border: 1px solid #333;">
-                <thead>
-                    <tr style="background: #111; color: white; text-align: left;">
-                        <th style="padding: 20px; font-size: 0.7rem; text-transform: uppercase;">Logo</th>
-                        <th style="padding: 20px; font-size: 0.7rem; text-transform: uppercase;">Nombre</th>
-                        <th style="padding: 20px; font-size: 0.7rem; text-transform: uppercase;">País</th>
-                        <th style="padding: 20px; font-size: 0.7rem; text-transform: uppercase;">Coches en Stock</th>
-                        <th style="padding: 20px; font-size: 0.7rem; text-transform: uppercase; text-align: right;">Acciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($marcas as $marca)
-                        <tr style="border-bottom: 1px solid #333; transition: background 0.3s;"
-                            onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='transparent'">
-                            <td style="padding: 20px;">
-                                @if($marca->logo)
-                                    <img src="{{ asset('storage/' . $marca->logo) }}" alt="Logo" style="height: 30px;">
-                                @else
-                                    <span style="font-size: 0.6rem; color: #444;">Sin logo</span>
-                                @endif
-                            </td>
-                            <td style="padding: 20px; font-weight: 600;">{{ $marca->nombre }}</td>
-                            <td style="padding: 20px; color: var(--lamb-grey-medium);">{{ $marca->pais }}</td>
-                            <td style="padding: 20px;">
-                                <span
-                                    style="background: var(--lamb-charcoal); padding: 5px 12px; border-radius: 20px; font-size: 0.7rem;">
-                                    {{ $marca->coches_count }} vehículos
-                                </span>
-                            </td>
-                            <td style="padding: 20px; text-align: right;">
-                                <div style="display: flex; gap: 15px; justify-content: flex-end;">
-                                    <a href="{{ route('marcas.edit', $marca->id) }}"
-                                        style="color: var(--lamb-grey-medium); text-decoration: none; font-size: 0.7rem; text-transform: uppercase; font-weight: 700;">Editar</a>
-                                    <a href="{{ route('marcas.delete', $marca->id) }}"
-                                        style="color: #a00; text-decoration: none; font-size: 0.7rem; text-transform: uppercase; font-weight: 700;"
-                                        onclick="return confirm('¿Eliminar esta marca? Se borrarán sus coches asociados.')">Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 40px;" data-animate>
+        @foreach($marcas as $marca)
+            <div style="background: var(--lamb-grey-light); border: 1px solid #333; transition: all 0.4s var(--transition-premium); overflow: hidden; position: relative;"
+                 onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='var(--lamb-gold)'; this.style.background='white'" 
+                 onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#333'; this.style.background='var(--lamb-grey-light)'">
+                
+                <div style="padding: 40px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
+                        <div>
+                            <div style="font-family: 'Syne', sans-serif; font-size: 0.6rem; letter-spacing: 3px; color: var(--lamb-gold); text-transform: uppercase; margin-bottom: 5px;">{{ $marca->pais }}</div>
+                            <h3 style="font-size: 2rem; margin: 0; letter-spacing: 2px;">{{ strtoupper($marca->nombre) }}</h3>
+                        </div>
+                        @if($marca->logo)
+                            <img src="{{ asset('storage/' . $marca->logo) }}" alt="Logo" style="height: 40px; filter: grayscale(1);">
+                        @endif
+                    </div>
+
+                    <div style="font-style: italic; font-size: 0.9rem; color: var(--lamb-charcoal); margin-bottom: 20px; font-family: 'Syne'; letter-spacing: 1px;">
+                        "{{ $marca->slogan ?: 'Pure Excellence' }}"
+                    </div>
+
+                    <p style="color: var(--lamb-grey-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 30px; height: 80px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;">
+                        {{ $marca->descripcion ?: 'Marca de automoción de gran prestigio integrada en nuestro catálogo exclusivo de Phantom Cars.' }}
+                    </p>
+
+                    <div style="border-top: 1px solid #eee; padding-top: 25px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                            {{ $marca->coches_count }} Modelos
+                        </span>
+                        
+                        <div style="display: flex; gap: 15px;">
+                            @if(auth()->user()->rol === 'admin')
+                                <a href="{{ route('marcas.edit', $marca->id) }}" style="color: var(--lamb-charcoal); text-decoration: none; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Editar</a>
+                                <a href="{{ route('marcas.delete', $marca->id) }}" style="color: #a00; text-decoration: none; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;" onclick="return confirm('¿Eliminar marca?')">Borrar</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
     </div>
 @endsection

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->decimal('precio', 12, 2);
             $table->string('imagen')->nullable();
             $table->foreignId('marca_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

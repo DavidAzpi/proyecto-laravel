@@ -33,6 +33,53 @@ class CocheController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $coche = Coche::with('marca', 'especificaciones')->findOrFail($id);
+        return view('coches.show', compact('coche'));
+    }
+
+    /**
+     * Muestra el formulario de simulación de compra.
+     */
+    public function compra($id)
+    {
+        $coche = Coche::with('marca')->findOrFail($id);
+        return view('coches.checkout', compact('coche'));
+    }
+
+    /**
+     * Procesa la simulación de compra.
+     */
+    public function procesarCompra(Request $request)
+    {
+        $request->validate([
+            'coche_id' => 'required|exists:coches,id',
+            'nombre' => 'required|string|max:100',
+            'email' => 'required|email',
+            'metodo_pago' => 'required'
+        ]);
+
+        $coche = Coche::findOrFail($request->coche_id);
+        $referencia = 'PHANTOM-' . strtoupper(substr(md5(time() . $request->email), 0, 8));
+
+        // Persistimos el pedido en la base de datos
+        \App\Models\Pedido::create([
+            'coche_id' => $coche->id,
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'metodo_pago' => $request->metodo_pago,
+            'referencia' => $referencia,
+            'total' => $coche->precio
+        ]);
+        
+        return view('coches.checkout_confirm', [
+            'coche' => $coche,
+            'cliente' => $request->only(['nombre', 'email']),
+            'referencia' => $referencia
+        ]);
+    }
+
     /**
      * Muestra el formulario para añadir un nuevo coche.
      */
@@ -50,7 +97,7 @@ class CocheController extends Controller
     /**
      * Guarda un nuevo coche en la base de datos.
      */
-    public function save(Request $request)
+    public function store(Request $request)
     {
         // Validación de datos con mensajes personalizados (Mejora personal 1)
         $request->validate([
@@ -82,15 +129,14 @@ class CocheController extends Controller
         // Guardar relaciones N:N con pivot (Mejora personal 2: Uso de sync)
         if ($request->has('especificaciones')) {
             $datosPivot = [];
-            foreach ($request->input('especificaciones') as $indice => $idEspecificacion) {
-                // Obtenemos el valor correspondiente del array de valores
-                $valor = $request->input('valores_especificacion')[$indice] ?? '';
+            foreach ($request->input('especificaciones') as $idEspecificacion) {
+                $valor = $request->input('valores_especificacion')[$idEspecificacion] ?? '';
                 $datosPivot[$idEspecificacion] = ['valor' => $valor];
             }
             $coche->especificaciones()->sync($datosPivot);
         }
 
-        return redirect()->action([CocheController::class, 'index'])
+        return redirect()->route('coches.index')
             ->with('success', 'Vehículo añadido correctamente al inventario.');
     }
 
@@ -144,21 +190,21 @@ class CocheController extends Controller
         // Actualizar relaciones N:N
         if ($request->has('especificaciones')) {
             $datosPivot = [];
-            foreach ($request->input('especificaciones') as $indice => $idEspecificacion) {
-                $valor = $request->input('valores_especificacion')[$indice] ?? '';
+            foreach ($request->input('especificaciones') as $idEspecificacion) {
+                $valor = $request->input('valores_especificacion')[$idEspecificacion] ?? '';
                 $datosPivot[$idEspecificacion] = ['valor' => $valor];
             }
             $coche->especificaciones()->sync($datosPivot);
         }
 
-        return redirect()->action([CocheController::class, 'index'])
+        return redirect()->route('coches.index')
             ->with('success', 'Vehículo actualizado satisfactoriamente.');
     }
 
     /**
      * Elimina un coche de la base de datos.
      */
-    public function delete($id)
+    public function destroy($id)
     {
         $coche = Coche::findOrFail($id);
 
@@ -169,7 +215,7 @@ class CocheController extends Controller
 
         $coche->delete();
 
-        return redirect()->action([CocheController::class, 'index'])
+        return redirect()->route('coches.index')
             ->with('success', 'Vehículo eliminado del sistema.');
     }
 }

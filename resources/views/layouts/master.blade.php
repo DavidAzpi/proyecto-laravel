@@ -20,28 +20,59 @@
 <body>
 
     <nav class="premium-nav">
-        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('coches.index') }}" class="nav-logo"
                 style="display: flex; align-items: center; gap: 15px;">
                 <span
                     style="font-family: 'Syne', sans-serif; font-weight: 400; letter-spacing: 6px; font-size: 1.2rem;">PHANTOM
                     <span style="font-weight: 200; opacity: 0.7;">CARS</span></span>
             </a>
-            <div class="nav-links">
+            <div class="nav-links" style="display: flex; align-items: center; gap: 30px;">
                 <a href="{{ route('coches.index') }}">Modelos</a>
                 <a href="{{ route('marcas.index') }}">Marcas</a>
                 <a href="{{ route('especificaciones.index') }}">Especificaciones</a>
+                @if(auth()->check() && auth()->user()->rol === 'admin')
+                    <a href="{{ route('pedidos.index') }}" style="color: var(--lamb-gold); font-weight: 800;">Pedidos</a>
+                @endif
+                
+                @auth
+                    <div style="display: flex; align-items: center; gap: 20px; margin-left: 20px; border-left: 1px solid #333; padding-left: 20px;">
+                        <div style="text-align: right;">
+                            <div style="color: var(--lamb-gold); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                                {{ auth()->user()->rol }}
+                            </div>
+                            <div style="color: white; font-size: 0.85rem; font-weight: 400;">
+                                {{ auth()->user()->name }}
+                            </div>
+                        </div>
+                        <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                            @csrf
+                            <button type="submit" class="btn-premium btn-fill" style="padding: 8px 15px; font-size: 0.7rem; background: #222;">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn-premium btn-fill" style="padding: 10px 20px; font-size: 0.7rem;">Entrar</a>
+                @endauth
             </div>
         </div>
     </nav>
 
     @yield('hero')
 
-    <main class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
+    <main class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px; min-height: 60vh;">
         @if(session('success'))
             <div
-                style="background: #e8f5e9; color: #2e7d32; padding: 20px; margin-top: 20px; border-radius: 4px; border-left: 5px solid #4caf50;">
+                style="background: #e8f5e9; color: #2e7d32; padding: 20px; margin-top: 20px; border-radius: 4px; border-left: 5px solid #4caf50; font-family: 'Outfit', sans-serif;">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div
+                style="background: #ffebee; color: #c62828; padding: 20px; margin-top: 20px; border-radius: 4px; border-left: 5px solid #ef5350; font-family: 'Outfit', sans-serif;">
+                {{ session('error') }}
             </div>
         @endif
 

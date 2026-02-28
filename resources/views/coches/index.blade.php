@@ -40,6 +40,10 @@
                             <img src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/0_facelift_2025/homepage/models/temerario/familyChooser-Temerario_0.png"
                                 class="car-image" alt="Temerario">
                         </div>
+                        <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
+                            <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                        </div>
                     </div>
                 </div>
 
@@ -56,6 +60,10 @@
                         <div class="car-image-container">
                             <img src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/0_facelift_2025/homepage/models/urus/models_urus_se.png"
                                 class="car-image" alt="Urus SE">
+                        </div>
+                        <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
+                            <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -74,6 +82,10 @@
                             <img src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/0_facelift_2025/homepage/models/revuelto/familyChooser-Revuelto_0.png"
                                 class="car-image" alt="Revuelto">
                         </div>
+                        <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
+                            <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                        </div>
                     </div>
                 </div>
 
@@ -91,6 +103,10 @@
                             <img src="https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/0_facelift_2025/homepage/models/huracan/familyChooser-Huracan%20Sterrato.png"
                                 class="car-image" alt="Huracán Sterrato">
                         </div>
+                        <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
+                            <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,18 +122,18 @@
 @endsection
 
 @section('content')
-    <div class="showroom-header" style="margin-top: 80px; text-align: center;" data-animate>
+    <div class="showroom-header" id="showroom" style="margin-top: 80px; text-align: center;" data-animate>
         <h2 style="font-size: 3rem; margin-bottom: 15px;">Modelos en Stock</h2>
         <p style="color: var(--lamb-grey-medium); max-width: 600px; margin: 0 auto 50px;">Explore nuestra selección
             exclusiva de vehículos de alto rendimiento. Cada unidad ha sido certificada por nuestros técnicos expertos.</p>
     </div>
 
-    <!-- Filtros de Búsqueda (Mejora personal 3: Buscador) -->
+    <!-- Filtros de Búsqueda -->
     <div style="margin-bottom: 40px; display: flex; justify-content: center;" data-animate>
         <form action="{{ route('coches.index') }}" method="GET"
             style="display: flex; gap: 10px; max-width: 500px; width: 100%;">
             <input type="text" name="buscar" placeholder="Buscar por modelo..." value="{{ request('buscar') }}"
-                style="flex: 1; padding: 12px 20px; border: 1px solid #333; background: transparent; color: white;">
+                style="flex: 1; padding: 12px 20px; border: 1px solid #333; background: transparent; color: #111; font-family: 'Outfit', sans-serif;">
             <button type="submit" class="btn-premium btn-fill" style="padding: 12px 25px;">Buscar</button>
         </form>
     </div>
@@ -152,25 +168,30 @@
                         @endforeach
                     </div>
 
-                    <div class="car-card-actions">
-                        <a href="{{ route('coches.edit', $coche->id) }}" class="btn-premium btn-text">Editar Detalles</a>
-                        <a href="{{ route('coches.delete', $coche->id) }}" class="btn-premium btn-fill"
-                            onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
-                            style="background: #a00; border: none; font-size: 0.7rem; padding: 10px 15px;">
-                            Eliminar
-                        </a>
-                    </div>
+                        <div class="car-card-actions">
+                            <a href="{{ route('coches.show', $coche->id) }}" class="btn-premium btn-fill" style="background: var(--lamb-gold); border: none;">VER DETALLES</a>
+                            @if(auth()->user()->rol === 'admin')
+                                <a href="{{ route('coches.edit', $coche->id) }}" class="btn-premium btn-text">Editar</a>
+                                <a href="{{ route('coches.delete', $coche->id) }}" class="btn-premium btn-text"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
+                                    style="color: #a00;">
+                                    Eliminar
+                                </a>
+                            @endif
+                        </div>
                 </div>
             </div>
         @endforeach
     </div>
 
-    <div class="showroom-actions" style="display: flex; justify-content: center; margin-bottom: 60px;" data-animate>
-        <a href="{{ route('coches.create') }}" class="btn-premium btn-fill">Añadir Nuevo Vehículo</a>
-    </div>
+    @if(auth()->user()->rol === 'admin')
+        <div class="showroom-actions" style="display: flex; justify-content: center; margin-bottom: 60px;" data-animate>
+            <a href="{{ route('coches.create') }}" class="btn-premium btn-fill">Añadir Nuevo Vehículo</a>
+        </div>
+    @endif
 
     <!-- Implementación de Paginación -->
-    <div class="pagination-container" style="display: flex; justify-content: center; margin-top: 40px;">
+    <div class="pagination-container" style="display: flex; justify-content: center; margin: 40px 0 80px;">
         {{ $coches->appends(request()->query())->links() }}
     </div>
 

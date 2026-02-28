@@ -3,20 +3,23 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Especificacion;
 
-/**
- * Seeder para las especificaciones técnicas.
- */
 class EspecificacionSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        DB::table('especificaciones')->insert([
-            ['nombre' => 'Motor', 'descripcion' => 'Configuración del motor (V8, V12, etc.)', 'created_at' => now(), 'updated_at' => now()],
-            ['nombre' => 'Potencia', 'descripcion' => 'Caballos de fuerza (CV)', 'created_at' => now(), 'updated_at' => now()],
-            ['nombre' => 'Tracción', 'descripcion' => 'Tipo de tracción (RWD, AWD)', 'created_at' => now(), 'updated_at' => now()],
-            ['nombre' => 'Transmisión', 'descripcion' => 'Tipo de caja de cambios', 'created_at' => now(), 'updated_at' => now()],
+        Especificacion::create([
+            'nombre' => 'Motor', 
+            'descripcion' => 'Arquitectura del bloque de cilindros, disposición (V, W, Boxer) y aspiración (Atmosférico/Turbo).'
+        ]);
+        Especificacion::create([
+            'nombre' => 'Potencia', 
+            'descripcion' => 'Rendimiento máximo del propulsor expresado en Caballos de Vapor (CV) a un régimen específico.'
+        ]);
+        Especificacion::create([
+            'nombre' => 'Transmisión', 
+            'descripcion' => 'Sistema de gestión de par motor, incluyendo tipo de embrague (Doble Embrague/Manual) y número de marchas.'
         ]);
     }
 }

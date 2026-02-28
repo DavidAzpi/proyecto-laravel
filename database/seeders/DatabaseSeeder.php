@@ -15,14 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Llamamos a los seeders individuales
         $this->call([
+            UserSeeder::class,
             MarcaSeeder::class,
             EspecificacionSeeder::class,
             CocheSeeder::class,
-            RelacionSeeder::class,
         ]);
-
-        // El seeder de relaciones N:N se podría hacer aquí o en uno aparte
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Coche
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Coche extends Model
 {
+    use SoftDeletes;
+
     // Campos que se pueden rellenar de forma masiva
     protected $fillable = ['modelo', 'precio', 'imagen', 'marca_id'];
 
