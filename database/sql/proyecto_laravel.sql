@@ -1,6 +1,4 @@
--- SQL Dump for Phantom Cars Project
--- Base de datos: proyecto_laravel
--- ------------------------------------------------------
+
 
 CREATE DATABASE IF NOT EXISTS `proyecto_laravel` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `proyecto_laravel`;
