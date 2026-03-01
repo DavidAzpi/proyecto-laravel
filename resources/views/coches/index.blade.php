@@ -13,7 +13,7 @@
                 <img src="" id="peek-right-img" class="peek-img" alt="Peek Right">
             </div>
 
-            <!-- Navegación -->
+            <!-- Navegacion -->
             <button class="nav-arrow arrow-left" onclick="moveSlide(-1)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="15 18 9 12 15 6"></polyline>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                <!-- Slide 4: Huracán Sterrato -->
+                <!-- Slide 4: Huracan Sterrato -->
                 <div class="carousel-slide">
                     <div class="slide-content">
                         <div class="model-name">HURACÁN STERRATO</div>
@@ -128,7 +128,7 @@
             exclusiva de vehículos de alto rendimiento. Cada unidad ha sido certificada por nuestros técnicos expertos.</p>
     </div>
 
-    <!-- Filtros de Búsqueda -->
+    <!-- Filtros de Busqueda -->
     <div style="margin-bottom: 40px; display: flex; justify-content: center;" data-animate>
         <form action="{{ route('coches.index') }}" method="GET"
             style="display: flex; gap: 10px; max-width: 500px; width: 100%;">
@@ -159,7 +159,7 @@
                     <h3 class="car-card-model">{{ $coche->modelo }}</h3>
                     <div class="car-card-price">{{ number_format($coche->precio, 0, ',', '.') }} €</div>
 
-                    <!-- Datos de la relación N:N con tabla pivote -->
+                    <!-- Datos de la relacion N:N con tabla pivote -->
                     <div class="car-spec-tags">
                         @foreach($coche->especificaciones as $espec)
                             <span class="car-spec-tag">
@@ -190,7 +190,7 @@
         </div>
     @endif
 
-    <!-- Implementación de Paginación -->
+    <!-- Implementacion de Paginacion -->
     <div class="pagination-container" style="display: flex; justify-content: center; margin: 40px 0 80px;">
         {{ $coches->appends(request()->query())->links() }}
     </div>

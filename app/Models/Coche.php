@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Coche
- * Representa un vehículo en el concesionario.
+ * Representa un vehiculo en el concesionario.
  */
 class Coche extends Model
 {
@@ -17,7 +17,7 @@ class Coche extends Model
     protected $fillable = ['modelo', 'precio', 'imagen', 'marca_id'];
 
     /**
-     * Relación 1:N con la marca.
+     * Relacion 1:N con la marca.
      * Un coche pertenece a una marca.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -28,7 +28,7 @@ class Coche extends Model
     }
 
     /**
-     * Relación N:N con especificaciones.
+     * Relacion N:N con especificaciones.
      * Un coche puede tener muchas especificaciones y viceversa.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

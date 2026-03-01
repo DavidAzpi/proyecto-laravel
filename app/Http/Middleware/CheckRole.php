@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Middleware para la verificación de roles de usuario.
+ * Middleware para la verificacion de roles de usuario.
  */
 class CheckRole
 {
     /**
-     * Procesa la petición entrante y verifica si el usuario tiene el rol necesario.
+     * Procesa la peticion entrante y verifica si el usuario tiene el rol necesario.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

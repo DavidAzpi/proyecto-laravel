@@ -61,7 +61,7 @@
             @endforeach
         </div>
 
-        <!-- Paginación -->
+        <!-- Paginacion -->
         <div class="pagination-container"
             style="display: flex; justify-content: center; margin-top: 60px; margin-bottom: 40px;">
             {{ $especificaciones->links() }}

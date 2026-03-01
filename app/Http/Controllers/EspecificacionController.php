@@ -6,8 +6,8 @@ use App\Models\Especificacion;
 use Illuminate\Http\Request;
 
 /**
- * Controlador para la gestión de especificaciones técnicas.
- * Entidad C en la relación N:N con Coche (Entidad B).
+ * Controlador para la gestion de especificaciones tecnicas.
+ * Entidad C en la relacion N:N con Coche (Entidad B).
  */
 class EspecificacionController extends Controller
 {
@@ -25,7 +25,7 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Muestra el formulario para crear una nueva especificación.
+     * Muestra el formulario para crear una nueva especificacion.
      *
      * @return \Illuminate\View\View
      */
@@ -35,7 +35,7 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Guarda una nueva especificación en la base de datos.
+     * Guarda una nueva especificacion en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -57,7 +57,7 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Muestra el formulario de edición de una especificación.
+     * Muestra el formulario de edicion de una especificacion.
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -69,7 +69,7 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Actualiza los datos de una especificación en la base de datos.
+     * Actualiza los datos de una especificacion en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -93,7 +93,7 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Elimina una especificación de la base de datos.
+     * Elimina una especificacion de la base de datos.
      *
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse

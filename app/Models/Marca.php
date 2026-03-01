@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Modelo Marca
- * Representa el fabricante del vehículo.
+ * Representa el fabricante del vehiculo.
  */
 class Marca extends Model
 {
@@ -17,7 +17,7 @@ class Marca extends Model
     protected $fillable = ['nombre', 'pais', 'logo', 'slogan', 'descripcion'];
 
     /**
-     * Relación 1:N con coches.
+     * Relacion 1:N con coches.
      * Una marca tiene muchos coches.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

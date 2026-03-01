@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Controlador para la gestión de vehículos.
+ * Controlador para la gestion de vehiculos.
  */
 class CocheController extends Controller
 {
     /**
-     * Muestra el listado de todos los coches con paginación.
+     * Muestra el listado de todos los coches con paginacion.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
@@ -23,7 +23,7 @@ class CocheController extends Controller
     {
         $buscar = $request->input('buscar');
 
-        // Cargamos relaciones y aplicamos filtro si existe búsqueda
+        // Cargamos relaciones y aplicamos filtro si existe busqueda
         $coches = Coche::with('marca', 'especificaciones')
             ->when($buscar, function ($query, $buscar) {
                 return $query->where('modelo', 'LIKE', "%{$buscar}%");
@@ -37,7 +37,7 @@ class CocheController extends Controller
     }
 
     /**
-     * Muestra el detalle de un coche específico.
+     * Muestra el detalle de un coche especifico.
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -49,7 +49,7 @@ class CocheController extends Controller
     }
 
     /**
-     * Muestra el formulario de simulación de compra.
+     * Muestra el formulario de simulacion de compra.
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -61,7 +61,7 @@ class CocheController extends Controller
     }
 
     /**
-     * Procesa la simulación de compra.
+     * Procesa la simulacion de compra.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
@@ -96,7 +96,7 @@ class CocheController extends Controller
     }
 
     /**
-     * Muestra el formulario para añadir un nuevo coche.
+     * Muestra el formulario para anadir un nuevo coche.
      *
      * @return \Illuminate\View\View
      */
@@ -119,7 +119,7 @@ class CocheController extends Controller
      */
     public function store(Request $request)
     {
-        // Validación de datos con mensajes personalizados (Mejora personal 1)
+        // Validacion de datos con mensajes personalizados (Mejora personal 1)
         $request->validate([
             'modelo' => 'required|string|max:100',
             'precio' => 'required|numeric|min:0',
@@ -137,7 +137,7 @@ class CocheController extends Controller
         $coche->precio = $request->input('precio');
         $coche->marca_id = $request->input('marca_id');
 
-        // Gestión del archivo de imagen
+        // Gestion del archivo de imagen
         if ($request->hasFile('imagen')) {
             $nombreImagen = time() . '_' . $request->file('imagen')->getClientOriginalName();
             $ruta = $request->file('imagen')->storeAs('coches', $nombreImagen, 'public');
@@ -161,7 +161,7 @@ class CocheController extends Controller
     }
 
     /**
-     * Muestra el formulario de edición.
+     * Muestra el formulario de edicion.
      *
      * @param  int  $id
      * @return \Illuminate\View\View

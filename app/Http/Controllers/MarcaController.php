@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Controlador para la gestión de marcas fabricantes.
+ * Controlador para la gestion de marcas fabricantes.
  */
 class MarcaController extends Controller
 {
@@ -26,7 +26,7 @@ class MarcaController extends Controller
     }
 
     /**
-     * Formulario de creación.
+     * Formulario de creacion.
      *
      * @return \Illuminate\View\View
      */
@@ -65,7 +65,7 @@ class MarcaController extends Controller
     }
 
     /**
-     * Muestra el formulario de edición de una marca.
+     * Muestra el formulario de edicion de una marca.
      *
      * @param  int  $id
      * @return \Illuminate\View\View

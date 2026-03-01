@@ -11,7 +11,7 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Sembrar la base de datos de la aplicación.
+     * Sembrar la base de datos de la aplicacion.
      */
     public function run()
     {

@@ -55,7 +55,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Procesa el inicio de sesión del usuario.
+     * Procesa el inicio de sesion del usuario.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -78,7 +78,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Cierra la sesión del usuario.
+     * Cierra la sesion del usuario.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse

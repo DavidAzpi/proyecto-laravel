@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Modelo Pedido
- * Representa una solicitud de compra de un vehículo.
+ * Representa una solicitud de compra de un vehiculo.
  */
 class Pedido extends Model
 {
@@ -20,7 +20,7 @@ class Pedido extends Model
     ];
 
     /**
-     * Relación con el coche solicitado.
+     * Relacion con el coche solicitado.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

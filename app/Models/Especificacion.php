@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Modelo Especificación
- * Representa una característica técnica (Motor, Potencia, etc.).
+ * Modelo Especificacion
+ * Representa una caracteristica tecnica (Motor, Potencia, etc.).
  */
 class Especificacion extends Model
 {
     use SoftDeletes;
-    // Nombre de la tabla explícito
+    // Nombre de la tabla explicito
     protected $table = 'especificaciones';
 
     // Campos que se pueden rellenar de forma masiva
     protected $fillable = ['nombre', 'descripcion'];
 
     /**
-     * Relación N:N con coches.
-     * Una especificación puede estar en muchos coches.
+     * Relacion N:N con coches.
+     * Una especificacion puede estar en muchos coches.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

@@ -16,7 +16,7 @@ class CocheSeeder extends Seeder
         $porsche = Marca::where('nombre', 'Porsche')->first();
         $mclaren = Marca::where('nombre', 'McLaren')->first();
 
-        // Coches con imágenes en public/images/showroom
+        // Coches con imagenes en public/images/showroom
         Coche::create(['modelo' => 'Aventador SVJ', 'precio' => 450000, 'marca_id' => $lambo->id, 'imagen' => 'images/showroom/lamborghini_aventador.png']);
         Coche::create(['modelo' => '812 Superfast', 'precio' => 380000, 'marca_id' => $ferrari->id, 'imagen' => 'images/showroom/ferrari_812.png']);
         Coche::create(['modelo' => 'DBS Superleggera', 'precio' => 320000, 'marca_id' => $aston->id, 'imagen' => 'images/showroom/aston_martin_dbs.png']);

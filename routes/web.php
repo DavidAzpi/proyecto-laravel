@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Rutas de la Aplicación (Phantom Cars)
+| Rutas de la Aplicacion (Phantom Cars)
 |--------------------------------------------------------------------------
 */
 
-// Rutas de Autenticación
+// Rutas de Autenticacion
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Redirección inicial
+// Redireccion inicial
 Route::get('/', function () {
     return redirect()->route('coches.index');
 });
 
-// RUTAS PÚBLICAS (Lectura para todos autenticados)
+// RUTAS PUBLICAS (Lectura para todos autenticados)
 Route::middleware(['auth'])->group(function () {
     Route::get('/coches', [CocheController::class, 'index'])->name('coches.index');
     Route::get('/coches/{id}', [CocheController::class, 'show'])->name('coches.show');
@@ -37,10 +37,10 @@ Route::middleware(['auth'])->group(function () {
 
 // RUTAS PROTEGIDAS (Solo Admin)
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    // Gestión de Pedidos
+    // Gestion de Pedidos
     Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
 
-    // Gestión de Coches
+    // Gestion de Coches
     Route::prefix('coches')->group(function () {
         Route::get('/crear', [CocheController::class, 'create'])->name('coches.create');
         Route::post('/guardar', [CocheController::class, 'store'])->name('coches.save');
@@ -49,7 +49,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('/eliminar/{id}', [CocheController::class, 'destroy'])->name('coches.delete');
     });
 
-    // Gestión de Marcas
+    // Gestion de Marcas
     Route::prefix('marcas')->group(function () {
         Route::get('/crear', [MarcaController::class, 'create'])->name('marcas.create');
         Route::post('/guardar', [MarcaController::class, 'store'])->name('marcas.save');
@@ -58,7 +58,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('/eliminar/{id}', [MarcaController::class, 'destroy'])->name('marcas.delete');
     });
 
-    // Gestión de Especificaciones
+    // Gestion de Especificaciones
     Route::prefix('especificaciones')->group(function () {
         Route::get('/crear', [EspecificacionController::class, 'create'])->name('especificaciones.create');
         Route::post('/guardar', [EspecificacionController::class, 'store'])->name('especificaciones.save');
