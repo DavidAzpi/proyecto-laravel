@@ -21,6 +21,8 @@ class Especificacion extends Model
     /**
      * Relación N:N con coches.
      * Una especificación puede estar en muchos coches.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function coches()
     {

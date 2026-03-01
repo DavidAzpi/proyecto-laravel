@@ -8,6 +8,8 @@ class PedidoController extends Controller
 {
     /**
      * Muestra el listado de todos los pedidos (solo Admin).
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {

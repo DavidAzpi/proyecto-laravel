@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 class EspecificacionController extends Controller
 {
     /**
-     * Listado de especificaciones.
+     * Listado de todas las especificaciones registradas.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -23,7 +25,9 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Crear nueva especificación.
+     * Muestra el formulario para crear una nueva especificación.
+     *
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -31,7 +35,10 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Guardar especificación.
+     * Guarda una nueva especificación en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -50,7 +57,10 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Editar especificación.
+     * Muestra el formulario de edición de una especificación.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
@@ -59,7 +69,10 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Actualizar especificación.
+     * Actualiza los datos de una especificación en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -80,7 +93,10 @@ class EspecificacionController extends Controller
     }
 
     /**
-     * Borrar especificación.
+     * Elimina una especificación de la base de datos.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {

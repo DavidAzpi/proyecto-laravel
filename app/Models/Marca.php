@@ -19,6 +19,8 @@ class Marca extends Model
     /**
      * Relación 1:N con coches.
      * Una marca tiene muchos coches.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function coches()
     {

@@ -13,6 +13,8 @@ class MarcaController extends Controller
 {
     /**
      * Listado de marcas.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -25,6 +27,8 @@ class MarcaController extends Controller
 
     /**
      * Formulario de creación.
+     *
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -32,7 +36,10 @@ class MarcaController extends Controller
     }
 
     /**
-     * Guardar nueva marca.
+     * Guardar nueva marca en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -58,7 +65,10 @@ class MarcaController extends Controller
     }
 
     /**
-     * Editar marca.
+     * Muestra el formulario de edición de una marca.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
@@ -67,7 +77,10 @@ class MarcaController extends Controller
     }
 
     /**
-     * Actualizar marca.
+     * Actualizar los datos de una marca en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -98,7 +111,10 @@ class MarcaController extends Controller
     }
 
     /**
-     * Borrar marca.
+     * Borrar marca de la base de datos.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {

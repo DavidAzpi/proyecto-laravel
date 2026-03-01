@@ -8,16 +8,32 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    /**
+     * Muestra la vista de login.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showLogin()
     {
         return view('auth.login');
     }
 
+    /**
+     * Muestra la vista de registro.
+     *
+     * @return \Illuminate\View\View
+     */
     public function showRegister()
     {
         return view('auth.register');
     }
 
+    /**
+     * Procesa el registro de un nuevo usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -38,6 +54,12 @@ class AuthController extends Controller
         return redirect()->route('coches.index')->with('success', 'Bienvenido a Phantom Cars, ' . $user->name);
     }
 
+    /**
+     * Procesa el inicio de sesión del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -55,6 +77,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Cierra la sesión del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::logout();

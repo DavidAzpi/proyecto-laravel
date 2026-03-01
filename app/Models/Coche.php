@@ -19,6 +19,8 @@ class Coche extends Model
     /**
      * Relación 1:N con la marca.
      * Un coche pertenece a una marca.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function marca()
     {
@@ -28,6 +30,8 @@ class Coche extends Model
     /**
      * Relación N:N con especificaciones.
      * Un coche puede tener muchas especificaciones y viceversa.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function especificaciones()
     {

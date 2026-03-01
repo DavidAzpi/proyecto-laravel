@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Modelo Pedido
+ * Representa una solicitud de compra de un vehículo.
+ */
 class Pedido extends Model
 {
     protected $fillable = [
@@ -17,6 +21,8 @@ class Pedido extends Model
 
     /**
      * Relación con el coche solicitado.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function coche()
     {

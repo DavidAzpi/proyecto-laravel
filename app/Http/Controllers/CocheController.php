@@ -15,6 +15,9 @@ class CocheController extends Controller
 {
     /**
      * Muestra el listado de todos los coches con paginación.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -33,6 +36,12 @@ class CocheController extends Controller
         ]);
     }
 
+    /**
+     * Muestra el detalle de un coche específico.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
     public function show($id)
     {
         $coche = Coche::with('marca', 'especificaciones')->findOrFail($id);
@@ -41,6 +50,9 @@ class CocheController extends Controller
 
     /**
      * Muestra el formulario de simulación de compra.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function compra($id)
     {
@@ -50,6 +62,9 @@ class CocheController extends Controller
 
     /**
      * Procesa la simulación de compra.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function procesarCompra(Request $request)
     {
@@ -72,7 +87,7 @@ class CocheController extends Controller
             'referencia' => $referencia,
             'total' => $coche->precio
         ]);
-        
+
         return view('coches.checkout_confirm', [
             'coche' => $coche,
             'cliente' => $request->only(['nombre', 'email']),
@@ -82,6 +97,8 @@ class CocheController extends Controller
 
     /**
      * Muestra el formulario para añadir un nuevo coche.
+     *
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -96,6 +113,9 @@ class CocheController extends Controller
 
     /**
      * Guarda un nuevo coche en la base de datos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -142,6 +162,9 @@ class CocheController extends Controller
 
     /**
      * Muestra el formulario de edición.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
@@ -158,6 +181,9 @@ class CocheController extends Controller
 
     /**
      * Actualiza los datos de un coche existente.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -203,6 +229,9 @@ class CocheController extends Controller
 
     /**
      * Elimina un coche de la base de datos.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
