@@ -16,7 +16,7 @@ class EspecificacionController extends Controller
      */
     public function index()
     {
-        $especificaciones = Especificacion::all();
+        $especificaciones = Especificacion::paginate(6);
         return view('especificaciones.index', [
             'especificaciones' => $especificaciones
         ]);

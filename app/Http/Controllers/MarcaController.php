@@ -16,7 +16,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::withCount('coches')->orderBy('nombre', 'asc')->get();
+        $marcas = Marca::withCount('coches')->orderBy('nombre', 'asc')->paginate(6);
 
         return view('marcas.index', [
             'marcas' => $marcas
