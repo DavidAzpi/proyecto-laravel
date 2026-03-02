@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHANTOM CARS - @yield('title', 'Luxury')</title>
 
-    <!-- Premium Fonts -->
+    
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600&family=Syne:wght@400;500;700&family=Barlow+Condensed:ital,wght@0,300;0,400;1,300;1,400&display=swap"
         rel="stylesheet">
 
-    <!-- Custom CSS -->
+ 
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
 
     @stack('styles')
@@ -108,7 +108,7 @@
         </div>
     </footer>
 
-    <!-- Intersection Observer Script for animations -->
+   
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const observerOptions = {

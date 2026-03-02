@@ -5,7 +5,7 @@
 @section('hero')
     <div class="carousel-section" id="luxury-carousel">
         <div class="carousel-container">
-            <!-- Peek Images -->
+
             <div class="peek-container peek-left">
                 <img src="" id="peek-left-img" class="peek-img" alt="Peek Left">
             </div>
@@ -42,7 +42,9 @@
                         </div>
                         <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
                             <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
-                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline"
+                                onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar
+                                Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +65,9 @@
                         </div>
                         <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
                             <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
-                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline"
+                                onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar
+                                Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +88,9 @@
                         </div>
                         <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
                             <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
-                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline"
+                                onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar
+                                Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -105,7 +111,9 @@
                         </div>
                         <div class="button-group" style="margin-top: 30px; display: flex; gap: 20px;">
                             <a href="#showroom" class="btn-lamb btn-lamb-primary">Explorar Colección</a>
-                            <a href="#" class="btn-lamb btn-lamb-outline" onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar Ahora</a>
+                            <a href="#" class="btn-lamb btn-lamb-outline"
+                                onclick="alert('Funcionalidad de configuración próximamente disponible.')">Configurar
+                                Ahora</a>
                         </div>
                     </div>
                 </div>
@@ -168,17 +176,18 @@
                         @endforeach
                     </div>
 
-                        <div class="car-card-actions">
-                            <a href="{{ route('coches.show', $coche->id) }}" class="btn-premium btn-fill" style="background: var(--lamb-gold); border: none;">VER DETALLES</a>
-                            @if(auth()->user()->rol === 'admin')
-                                <a href="{{ route('coches.edit', $coche->id) }}" class="btn-premium btn-text">Editar</a>
-                                <a href="{{ route('coches.delete', $coche->id) }}" class="btn-premium btn-text"
-                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
-                                    style="color: #a00;">
-                                    Eliminar
-                                </a>
-                            @endif
-                        </div>
+                    <div class="car-card-actions">
+                        <a href="{{ route('coches.show', $coche->id) }}" class="btn-premium btn-fill"
+                            style="background: var(--lamb-gold); border: none;">VER DETALLES</a>
+                        @if(auth()->user()->rol === 'admin')
+                            <a href="{{ route('coches.edit', $coche->id) }}" class="btn-premium btn-text">Editar</a>
+                            <a href="{{ route('coches.delete', $coche->id) }}" class="btn-premium btn-text"
+                                onclick="return confirm('¿Estás seguro de que deseas eliminar este vehículo?')"
+                                style="color: #a00;">
+                                Eliminar
+                            </a>
+                        @endif
+                    </div>
                 </div>
             </div>
         @endforeach
