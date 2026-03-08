@@ -7,23 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-/**
- * Modelo de Usuario
- * Representa a un usuario (cliente o administrador) del sistema.
- * 
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $rol
- */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * Los atributos que se pueden asignar masivamente.
+     * The attributes that are mass assignable.
      *
      * @var list<string>
      */
@@ -31,11 +21,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'rol',
+        'role',
     ];
 
     /**
-     * Los atributos que deben ocultarse para la serializacion.
+     * Comprobar si el usuario es administrador
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * The attributes that should be hidden for serialization.
      *
      * @var list<string>
      */
@@ -45,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Obtener los atributos que deben ser convertidos.
+     * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */

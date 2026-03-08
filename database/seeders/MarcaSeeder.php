@@ -2,42 +2,47 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Marca;
 
 class MarcaSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        Marca::create([
-            'nombre' => 'Lamborghini', 
-            'pais' => 'Italia', 
-            'slogan' => 'Expect the unexpected', 
-            'descripcion' => 'Automobili Lamborghini es un fabricante italiano de automóviles deportivos de lujo, fundado en 1963 por Ferruccio Lamborghini.'
+        // Limpiamos para evitar duplicados si se corre varias veces
+        \App\Models\Marca::truncate();
+
+        \App\Models\Marca::create([
+            'nombre' => 'Lamborghini',
+            'logo' => 'marcas/lamborghini_logo.png',
+            'pais' => 'Italia'
         ]);
-        Marca::create([
-            'nombre' => 'Ferrari', 
-            'pais' => 'Italia', 
-            'slogan' => 'Driving emotion', 
-            'descripcion' => 'Ferrari es un fabricante italiano de automóviles deportivos de alto rendimiento fundado por Enzo Ferrari en 1939.'
+
+        \App\Models\Marca::create([
+            'nombre' => 'Ferrari',
+            'logo' => 'marcas/ferrari_logo.png',
+            'pais' => 'Italia'
         ]);
-        Marca::create([
-            'nombre' => 'Aston Martin', 
-            'pais' => 'Reino Unido', 
-            'slogan' => 'Power, Beauty and Soul', 
-            'descripcion' => 'Aston Martin es un fabricante británico de automóviles de lujo y alto rendimiento, conocido por su asociación con James Bond.'
+
+        \App\Models\Marca::create([
+            'nombre' => 'Porsche',
+            'logo' => 'marcas/porsche_logo.png',
+            'pais' => 'Alemania'
         ]);
-        Marca::create([
-            'nombre' => 'Porsche', 
-            'pais' => 'Alemania', 
-            'slogan' => 'There is no substitute', 
-            'descripcion' => 'Porsche es un fabricante alemán de automóviles deportivos de alta gama, fundado en Stuttgart en 1931 por Ferdinand Porsche.'
+
+        \App\Models\Marca::create([
+            'nombre' => 'Aston Martin',
+            'logo' => 'marcas/aston_martin_logo.png',
+            'pais' => 'Reino Unido'
         ]);
-        Marca::create([
-            'nombre' => 'McLaren', 
-            'pais' => 'Reino Unido', 
-            'slogan' => 'Prepare to proceed', 
-            'descripcion' => 'McLaren Automotive es un fabricante británico de automóviles deportivos de lujo con sede en Woking, Inglaterra.'
+
+        \App\Models\Marca::create([
+            'nombre' => 'McLaren',
+            'logo' => 'marcas/mclaren_logo.png',
+            'pais' => 'Reino Unido'
         ]);
     }
 }

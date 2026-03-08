@@ -5,105 +5,67 @@ namespace App\Http\Controllers;
 use App\Models\Especificacion;
 use Illuminate\Http\Request;
 
-/**
- * Controlador para la gestion de especificaciones tecnicas.
- * Entidad C en la relacion N:N con Coche (Entidad B).
- */
 class EspecificacionController extends Controller
 {
     /**
-     * Listado de todas las especificaciones registradas.
-     *
-     * @return \Illuminate\View\View
+     * Vista pública de especificaciones
      */
-    public function index()
+    public function publicIndex()
     {
-        $especificaciones = Especificacion::paginate(6);
-        return view('especificaciones.index', [
-            'especificaciones' => $especificaciones
-        ]);
+        $especificaciones = Especificacion::withCount('coches')->paginate(10);
+        return view('especificaciones.index', compact('especificaciones'));
     }
 
     /**
-     * Muestra el formulario para crear una nueva especificacion.
-     *
-     * @return \Illuminate\View\View
+     * Listado en panel admin
      */
+    public function adminIndex()
+    {
+        $especificaciones = Especificacion::with(['coches.marca'])->orderBy('nombre')->paginate(10);
+        return view('admin.especificaciones.index', compact('especificaciones'));
+    }
+
     public function create()
     {
-        return view('especificaciones.create');
+        return view('admin.especificaciones.create');
     }
 
-    /**
-     * Guarda una nueva especificacion en la base de datos.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
+    public function save(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|unique:especificaciones,nombre',
-            'descripcion' => 'nullable|string'
+        $validated = $request->validate([
+            'nombre'      => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
         ]);
 
-        $especificacion = new Especificacion();
-        $especificacion->nombre = $request->input('nombre');
-        $especificacion->descripcion = $request->input('descripcion');
-        $especificacion->save();
+        Especificacion::create($validated);
 
-        return redirect()->route('especificaciones.index')
-            ->with('success', 'Especificación añadida.');
+        return redirect()->route('admin.especificaciones.index')->with('success', 'Especificación creada correctamente.');
     }
 
-    /**
-     * Muestra el formulario de edicion de una especificacion.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
     public function edit($id)
     {
-        $especificacion = Especificacion::findOrFail($id);
-        return view('especificaciones.edit', ['especificacion' => $especificacion]);
+        $especificacion = Especificacion::with(['coches.marca'])->findOrFail($id);
+        return view('admin.especificaciones.edit', compact('especificacion'));
     }
 
-    /**
-     * Actualiza los datos de una especificacion en la base de datos.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $id = $request->input('id');
-        $especificacion = Especificacion::findOrFail($id);
-
-        $request->validate([
-            'nombre' => 'required|string|unique:especificaciones,nombre,' . $id,
-            'descripcion' => 'nullable|string'
+        $validated = $request->validate([
+            'nombre'      => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
         ]);
 
-        $especificacion->nombre = $request->input('nombre');
-        $especificacion->descripcion = $request->input('descripcion');
-        $especificacion->save();
+        $especificacion = Especificacion::findOrFail($id);
+        $especificacion->update($validated);
 
-        return redirect()->route('especificaciones.index')
-            ->with('success', 'Especificación actualizada.');
+        return redirect()->route('admin.especificaciones.index')->with('success', 'Especificación actualizada correctamente.');
     }
 
-    /**
-     * Elimina una especificacion de la base de datos.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy($id)
+    public function delete($id)
     {
         $especificacion = Especificacion::findOrFail($id);
         $especificacion->delete();
 
-        return redirect()->route('especificaciones.index')
-            ->with('success', 'Especificación eliminada.');
+        return redirect()->route('admin.especificaciones.index')->with('success', 'Especificación eliminada correctamente.');
     }
 }

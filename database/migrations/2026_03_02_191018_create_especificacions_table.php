@@ -4,26 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
-     * Ejecuta las migraciones
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('especificaciones', function (Blueprint $table) {
+        Schema::create('especificacions', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
 
     /**
-     * Revierte las migraciones
+     * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('especificaciones');
+        Schema::dropIfExists('especificacion');
     }
 };

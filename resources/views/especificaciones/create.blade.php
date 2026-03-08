@@ -8,7 +8,7 @@
 
     <form action="{{ route('especificaciones.save') }}" method="POST">
         @csrf
-        
+
         <div class="form-group">
             <label class="premium-label">Título de la Característica</label>
             <input type="text" name="nombre" class="premium-input" placeholder="Ej: Velocidad Máxima, Tracción..." required>
@@ -21,7 +21,7 @@
 
         <div style="display: flex; gap: 20px; margin-top: 50px;">
             <button type="submit" class="btn-premium btn-fill">Crear Registro</button>
-            <a href="{{ route('especificaciones.index') }}" class="btn-premium btn-outline">Volver</a>
+            <a href="/especificaciones" class="btn-premium btn-outline">Volver</a>
         </div>
     </form>
 </div>

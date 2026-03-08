@@ -8,7 +8,7 @@
 
     <form action="{{ route('marcas.save') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        
+
         <div class="form-group">
             <label class="premium-label">Nombre de la Marca</label>
             <input type="text" name="nombre" class="premium-input" placeholder="Ej: Lamborghini, Ferrari..." required>
@@ -20,14 +20,14 @@
         </div>
 
         <div class="form-group">
-            <label class="premium-label">Logo de la Marca</label>
-            <input type="file" name="logo" class="premium-input" style="border-bottom: none; font-size: 0.8rem;">
-            <p style="font-size: 0.7rem; color: #999; margin-top: 5px;">Formatos admitidos: JPG, PNG. Máx 2MB.</p>
+            <label class="premium-label">Logo de la Marca (Subir archivo)</label>
+            <input type="file" name="logo" class="premium-input" style="border-bottom: none; font-size: 0.8rem; padding-top: 10px;">
+            <p style="font-size: 0.7rem; color: #999; margin-top: 5px;">Formatos: JPG, PNG. Máx 2MB.</p>
         </div>
 
         <div style="display: flex; gap: 20px; margin-top: 50px;">
             <button type="submit" class="btn-premium btn-fill">Guardar Marca</button>
-            <a href="{{ route('marcas.index') }}" class="btn-premium btn-outline">Cancelar</a>
+            <a href="/marcas" class="btn-premium btn-outline">Cancelar</a>
         </div>
     </form>
 </div>

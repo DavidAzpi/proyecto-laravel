@@ -1,38 +1,38 @@
-# PHANTOM CARS 
+# Phantom Cars
 
-Este proyecto es una aplicación web de gestión de inventario para un concesionario de vehículos de lujo, desarrollada con el framework **Laravel**. Permite la administración completa de marcas, modelos y especificaciones técnicas, además de ofrecer un sistema de simulación de pedidos para clientes registrados.
+Este proyecto consiste en una plataforma de gestión para un concesionario de vehículos de lujo desarrollada en Laravel. El sistema permite la administración de inventario, gestión de marcas y procesamiento de pedidos (simulados).
 
-## Integrantes y Reparto de Tareas
-El proyecto ha sido desarrollado por **Bruno Cavichia** y **David Azpilicueta**.
+## Equipo de desarrollo
 
-| Alumno | Responsabilidades Principales |
-| :--- | :--- |
-| **Bruno Cavichia** | Diseño de Base de Datos, Migraciones, Modelos Eloquent, Controladores (CRUD), Lógica de Roles y Soft Deletes. |
-| **David Azpilicueta** | Diseño de Interfaz (CSS Premium), Plantilla Master, Controladores (CRUD), Vistas de Usuario. |
+*   **Bruno Cavichia**
+*   **David Azpilicueta**
 
----
+## Distribución de tareas
 
-## Instalación y Configuración
+El trabajo se ha repartido de forma equitativa de la siguiente manera:
 
-### 1. Clonar y preparar el entorno
+### Bruno Cavichia
+*   **Base de datos**: Creación de migraciones, relaciones y seeders de datos.
+*   **Modelos**: Coche, Marca, Especificacion.
+*   **Controladores**: CocheController, MarcaController, EspecificacionController y AdminController.
+*   **Aportes**: Gestion de autenticacion junto con roles de usuario.
+
+### David Azpilicueta
+*   **Modelos**: User, Pedido.
+*   **Controladores**:UserController, PedidoController.
+*   **Aportes**: Implementacion de busqueda de coche y sistema de pedidos.
+
+## Instrucciones de instalación
+
+### 1. Preparación
 ```bash
-# Instalar dependencias
 composer install
-
-# Crear archivo de entorno
 cp .env.example .env
-
-# Generar clave de aplicación
 php artisan key:generate
 ```
 
-### 2. Configuración del Virtual Host (Punto 11)
-Para que el proyecto funcione en `http://proyecto-laravel.local`, debes configurar tu servidor local (XAMPP/Laragon) apuntando la raíz a la carpeta `/public`.
-
-### 3. Base de Datos y Seeders
-Configura tus credenciales en el `.env` y ejecuta:
+### 2. Base de datos
 ```bash
 php artisan migrate:fresh --seed
-# Es necesario crear el enlace simbólico para las imágenes
 php artisan storage:link
 ```

@@ -4,25 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
-     * Ejecuta las migraciones
+     * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('coches', function (Blueprint $table) {
             $table->id();
             $table->string('modelo');
-            $table->decimal('precio', 12, 2);
+            $table->decimal('precio', 10, 2);
             $table->string('imagen')->nullable();
-            $table->foreignId('marca_id')->constrained()->onDelete('cascade');
-            $table->softDeletes();
+            $table->foreignId('marca_id')->constrained('marcas')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     /**
-     * Revierte las migraciones
+     * Reverse the migrations.
      */
     public function down(): void
     {

@@ -10,21 +10,20 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Limpiamos usuarios previos para evitar errores de duplicado si se ejecuta sin fresh
-        User::whereIn('email', ['admin@phantom.com', 'cliente@phantom.com'])->delete();
-
+        // Admin
         User::create([
             'name' => 'Administrador',
             'email' => 'admin@phantom.com',
             'password' => Hash::make('admin123'),
-            'rol' => 'admin',
+            'role' => 'admin',
         ]);
 
+        // Usuario normal
         User::create([
-            'name' => 'Cliente Test',
-            'email' => 'cliente@phantom.com',
-            'password' => Hash::make('cliente123'),
-            'rol' => 'cliente',
+            'name' => 'Usuario Cliente',
+            'email' => 'user@phantom.com',
+            'password' => Hash::make('user123'),
+            'role' => 'user',
         ]);
     }
 }

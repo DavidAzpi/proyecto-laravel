@@ -4,22 +4,21 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-/**
- * Seeder Principal
- * Ejecuta todos los seeders en el orden correcto para mantener la integridad referencial.
- */
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Sembrar la base de datos de la aplicacion.
-     */
-    public function run()
+    public function run(): void
     {
+        // Desactivamos claves foráneas para poder limpiar las tablas
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+
         $this->call([
-            UserSeeder::class,
             MarcaSeeder::class,
             EspecificacionSeeder::class,
             CocheSeeder::class,
+            UserSeeder::class,
+            PedidoSeeder::class,
         ]);
+
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
     }
 }

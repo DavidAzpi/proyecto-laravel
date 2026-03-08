@@ -3,25 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Modelo Marca
- * Representa el fabricante del vehiculo.
- */
 class Marca extends Model
 {
-    use SoftDeletes;
+    protected $fillable = ['nombre', 'logo', 'pais'];
 
-    // Campos que se pueden rellenar de forma masiva
-    protected $fillable = ['nombre', 'pais', 'logo', 'slogan', 'descripcion'];
-
-    /**
-     * Relacion 1:N con coches.
-     * Una marca tiene muchos coches.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function coches()
     {
         return $this->hasMany(Coche::class);

@@ -4,25 +4,19 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Middleware para la verificacion de roles de usuario.
- */
 class CheckRole
 {
     /**
-     * Procesa la peticion entrante y verifica si el usuario tiene el rol necesario.
+     * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $role
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (!Auth::check() || Auth::user()->rol !== $role) {
-            return redirect('/')->with('error', 'No tienes permiso para acceder a esta sección.');
+        if (!$request->user() || $request->user()->role !== $role) {
+            abort(403, 'No tienes permiso para acceder a esta sección.');
         }
 
         return $next($request);

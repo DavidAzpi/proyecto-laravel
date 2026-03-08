@@ -3,39 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Modelo Coche
- * Representa un vehiculo en el concesionario.
- */
 class Coche extends Model
 {
-    use SoftDeletes;
-
-    // Campos que se pueden rellenar de forma masiva
     protected $fillable = ['modelo', 'precio', 'imagen', 'marca_id'];
 
-    /**
-     * Relacion 1:N con la marca.
-     * Un coche pertenece a una marca.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function marca()
     {
         return $this->belongsTo(Marca::class);
     }
 
-    /**
-     * Relacion N:N con especificaciones.
-     * Un coche puede tener muchas especificaciones y viceversa.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function especificaciones()
     {
-        return $this->belongsToMany(Especificacion::class, 'especificacion_coche')
-            ->withPivot('valor');
+        return $this->belongsToMany(Especificacion::class, 'coche_especificacion')
+        ->withTimestamps();
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Registra los servicios de la aplicacion.
+     * Register any application services.
      */
     public function register(): void
     {
@@ -15,10 +15,10 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Inicializa los servicios de la aplicacion.
+     * Bootstrap any application services.
      */
     public function boot(): void
     {
-        \Illuminate\Pagination\Paginator::useBootstrapFour();
+        \Illuminate\Pagination\Paginator::useBootstrapFive();
     }
 }

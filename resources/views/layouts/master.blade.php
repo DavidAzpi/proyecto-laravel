@@ -24,36 +24,36 @@
             <a href="{{ route('coches.index') }}" class="nav-logo"
                 style="display: flex; align-items: center; gap: 15px;">
                 <span
-                    style="font-family: 'Syne', sans-serif; font-weight: 400; letter-spacing: 6px; font-size: 1.2rem;">PHANTOM
-                    <span style="font-weight: 200; opacity: 0.7;">CARS</span></span>
+                    style="font-family: 'Syne', sans-serif; font-weight: 400; letter-spacing: 6px; font-size: 1.1rem; color: #111;">PHANTOM
+                    <span style="font-weight: 200; opacity: 0.5;">CARS</span></span>
             </a>
             <div class="nav-links" style="display: flex; align-items: center; gap: 30px;">
                 <a href="{{ route('coches.index') }}">Modelos</a>
                 <a href="{{ route('marcas.index') }}">Marcas</a>
                 <a href="{{ route('especificaciones.index') }}">Especificaciones</a>
-                @if(auth()->check() && auth()->user()->rol === 'admin')
-                    <a href="{{ route('pedidos.index') }}" style="color: var(--lamb-gold); font-weight: 800;">Pedidos</a>
+                @if(auth()->check() && auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" style="color: var(--lamb-gold); font-weight: 600; border: 1px solid var(--lamb-gold); padding: 6px 14px; border-radius: 4px; font-size: 0.75rem; letter-spacing: 1px;">Admin</a>
                 @endif
                 
                 @auth
-                    <div style="display: flex; align-items: center; gap: 20px; margin-left: 20px; border-left: 1px solid #333; padding-left: 20px;">
+                    <div style="display: flex; align-items: center; gap: 18px; margin-left: 18px; border-left: 1px solid #eee; padding-left: 18px;">
                         <div style="text-align: right;">
-                            <div style="color: var(--lamb-gold); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
-                                {{ auth()->user()->rol }}
+                            <div style="color: var(--lamb-gold); font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                                {{ auth()->user()->role }}
                             </div>
-                            <div style="color: white; font-size: 0.85rem; font-weight: 400;">
+                            <div style="color: #333; font-size: 0.82rem; font-weight: 400;">
                                 {{ auth()->user()->name }}
                             </div>
                         </div>
                         <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                             @csrf
-                            <button type="submit" class="btn-premium btn-fill" style="padding: 8px 15px; font-size: 0.7rem; background: #222;">
+                            <button type="submit" class="btn-premium btn-fill" style="padding: 7px 14px; font-size: 0.68rem;">
                                 Salir
                             </button>
                         </form>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn-premium btn-fill" style="padding: 10px 20px; font-size: 0.7rem;">Entrar</a>
+                    <a href="{{ route('login') }}" class="btn-premium btn-fill" style="padding: 8px 18px; font-size: 0.72rem;">Entrar</a>
                 @endauth
             </div>
         </div>
@@ -63,15 +63,13 @@
 
     <main class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px; min-height: 60vh;">
         @if(session('success'))
-            <div
-                style="background: #e8f5e9; color: #2e7d32; padding: 20px; margin-top: 20px; border-radius: 4px; border-left: 5px solid #4caf50; font-family: 'Outfit', sans-serif;">
+            <div style="background: #f0faf4; color: #2e7d32; padding: 14px 18px; margin-top: 20px; border-radius: 6px; border-left: 4px solid #38a169; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 300;">
                 {{ session('success') }}
             </div>
         @endif
 
         @if(session('error'))
-            <div
-                style="background: #ffebee; color: #c62828; padding: 20px; margin-top: 20px; border-radius: 4px; border-left: 5px solid #ef5350; font-family: 'Outfit', sans-serif;">
+            <div style="background: #fff5f5; color: #c62828; padding: 14px 18px; margin-top: 20px; border-radius: 6px; border-left: 4px solid #e53e3e; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 300;">
                 {{ session('error') }}
             </div>
         @endif
@@ -82,26 +80,26 @@
     <footer class="premium-footer">
         <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
             <div class="footer-minimal"
-                style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 40px; border-bottom: 1px solid #222; margin-bottom: 40px;">
+                style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 32px; border-bottom: 1px solid #e8e8e8; margin-bottom: 32px;">
                 <a href="{{ route('coches.index') }}" class="nav-logo"
                     style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
                     <span
-                        style="font-family: 'Syne', sans-serif; font-weight: 400; letter-spacing: 6px; font-size: 1.2rem; color: white;">PHANTOM
-                        <span style="font-weight: 200; opacity: 0.7;">CARS</span></span>
+                        style="font-family: 'Syne', sans-serif; font-weight: 400; letter-spacing: 6px; font-size: 1.1rem; color: #555;">PHANTOM
+                        <span style="font-weight: 200; opacity: 0.6;">CARS</span></span>
                 </a>
                 <div class="nav-links">
                     <a href="{{ route('coches.index') }}"
-                        style="color: var(--lamb-grey-medium); text-decoration: none; margin-left: 30px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Modelos</a>
+                        style="color: #999; text-decoration: none; margin-left: 28px; font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">Modelos</a>
                     <a href="{{ route('marcas.index') }}"
-                        style="color: var(--lamb-grey-medium); text-decoration: none; margin-left: 30px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Marcas</a>
+                        style="color: #999; text-decoration: none; margin-left: 28px; font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">Marcas</a>
                     <a href="{{ route('especificaciones.index') }}"
-                        style="color: var(--lamb-grey-medium); text-decoration: none; margin-left: 30px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Especificaciones</a>
+                        style="color: #999; text-decoration: none; margin-left: 28px; font-size: 0.75rem; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">Especificaciones</a>
                 </div>
             </div>
             <div class="footer-bottom"
-                style="text-align: center; color: var(--lamb-grey-medium); font-size: 0.7rem; letter-spacing: 1px;">
+                style="text-align: center; color: #bbb; font-size: 0.68rem; letter-spacing: 1px;">
                 &copy; {{ date('Y') }} PHANTOM CARS | THE ULTIMATE LUXURY EXPERIENCE | DESARROLLADO PARA 2º DAW
-                <div style="margin-top: 15px; font-size: 0.6rem; opacity: 0.5;">
+                <div style="margin-top: 12px; font-size: 0.6rem; opacity: 0.5;">
                     CONSUMO Y EMISIONES COMBINADOS: 11.8 - 14.1 L/100KM; CO2: 268 - 325 G/KM (WLTP)
                 </div>
             </div>

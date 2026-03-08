@@ -8,16 +8,16 @@
             <h2 style="font-size: 2.5rem; font-family: 'Syne', sans-serif; text-transform: uppercase;">
                 Nuestras <span style="font-weight: 200;">Marcas</span>
             </h2>
-            @if(auth()->user()->rol === 'admin')
-                <a href="{{ route('marcas.create') }}" class="btn-premium btn-fill">Añadir Marca</a>
+            @if(auth()->check() && auth()->user()->isAdmin())
+                <a href="{{ route('admin.marcas.create') }}" class="btn-premium btn-fill">Añadir Marca</a>
             @endif
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 40px;" data-animate>
             @foreach($marcas as $marca)
-                <div style="background: var(--lamb-grey-light); border: 1px solid #333; transition: all 0.4s var(--transition-premium); overflow: hidden; position: relative;"
-                    onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='var(--lamb-gold)'; this.style.background='white'"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#333'; this.style.background='var(--lamb-grey-light)'">
+                <div style="background: #ffffff; border: 1px solid #ebebeb; transition: all 0.35s ease; overflow: hidden; position: relative; border-radius: 10px;"
+                    onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='#d0d0d0'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.07)'"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#ebebeb'; this.style.boxShadow='none'">
 
                     <div style="padding: 40px;">
                         <div
@@ -31,19 +31,13 @@
                             </div>
                             @if($marca->logo)
                                 <img src="{{ asset('storage/' . $marca->logo) }}" alt="Logo"
-                                    style="height: 40px; filter: grayscale(1);">
+                                    style="height: 80px; max-width: 150px; object-fit: contain;">
                             @endif
                         </div>
 
-                        <div
-                            style="font-style: italic; font-size: 0.9rem; color: var(--lamb-charcoal); margin-bottom: 20px; font-family: 'Syne'; letter-spacing: 1px;">
-                            "{{ $marca->slogan ?: 'Pure Excellence' }}"
+                        <div style="font-family: 'Syne', sans-serif; font-size: 0.7rem; color: var(--lamb-grey-medium); margin-bottom: 30px; letter-spacing: 1px; text-transform: uppercase;">
+                            Prestigio y Rendimiento Superior
                         </div>
-
-                        <p
-                            style="color: var(--lamb-grey-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 30px; height: 80px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;">
-                            {{ $marca->descripcion ?: 'Marca de automoción de gran prestigio integrada en nuestro catálogo exclusivo de Phantom Cars.' }}
-                        </p>
 
                         <div
                             style="border-top: 1px solid #eee; padding-top: 25px; display: flex; justify-content: space-between; align-items: center;">
@@ -52,12 +46,14 @@
                             </span>
 
                             <div style="display: flex; gap: 15px;">
-                                @if(auth()->user()->rol === 'admin')
-                                    <a href="{{ route('marcas.edit', $marca->id) }}"
+                                @if(auth()->check() && auth()->user()->isAdmin())
+                                    <a href="{{ route('admin.marcas.edit', $marca->id) }}"
                                         style="color: var(--lamb-charcoal); text-decoration: none; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;">Editar</a>
-                                    <a href="{{ route('marcas.delete', $marca->id) }}"
-                                        style="color: #a00; text-decoration: none; font-size: 0.7rem; font-weight: 800; text-transform: uppercase;"
-                                        onclick="return confirm('¿Eliminar marca?')">Borrar</a>
+                                    <form action="{{ route('admin.marcas.delete', $marca->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar marca?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="background:none; border:none; color:#a00; cursor:pointer; font-size:0.7rem; font-weight:800; text-transform:uppercase; font-family:inherit; padding:0;">Borrar</button>
+                                    </form>
                                 @endif
                             </div>
                         </div>

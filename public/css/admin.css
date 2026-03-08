@@ -1,0 +1,745 @@
+/* ============================================
+   PHANTOM CARS — Admin Panel CSS
+   Minimal White, Light Typography
+   ============================================ */
+
+:root {
+    --admin-white: #ffffff;
+    --admin-bg: #f7f7f5;
+    --admin-sidebar-bg: #ffffff;
+    --admin-text: #1a1a1a;
+    --admin-text-light: #888888;
+    --admin-text-muted: #b0b0b0;
+    --admin-border: #ebebeb;
+    --admin-border-dark: #d5d5d5;
+    --admin-accent: #1a1a1a;
+    --admin-accent-hover: #333333;
+    --admin-gold: #B8942A;
+    --admin-danger: #e53e3e;
+    --admin-success: #38a169;
+    --admin-sidebar-width: 240px;
+    --admin-topbar-height: 60px;
+    --font-body: 'Outfit', sans-serif;
+    --font-heading: 'Syne', sans-serif;
+    --transition: 0.2s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-body {
+    font-family: var(--font-body);
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    display: flex;
+    min-height: 100vh;
+    font-weight: 300;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.admin-sidebar {
+    width: var(--admin-sidebar-width);
+    background: var(--admin-sidebar-bg);
+    border-right: 1px solid var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    padding: 0;
+}
+
+.sidebar-logo {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.logo-main {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    color: var(--admin-text);
+}
+
+.logo-sub {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    color: var(--admin-text-light);
+}
+
+.logo-badge {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--admin-text-muted);
+    border: 1px solid var(--admin-border);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 24px 16px;
+    overflow-y: auto;
+}
+
+.nav-section-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--admin-text-muted);
+    padding: 0 8px;
+    margin-bottom: 8px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--admin-text-light);
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: all var(--transition);
+    margin-bottom: 2px;
+    letter-spacing: 0.3px;
+}
+
+.sidebar-link:hover {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+}
+
+.sidebar-link.active {
+    background: var(--admin-text);
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.sidebar-link.active svg {
+    stroke: #ffffff;
+}
+
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid var(--admin-border);
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--admin-text);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.user-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--admin-text);
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 0.65rem;
+    color: var(--admin-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar-action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: var(--admin-text-muted);
+    text-decoration: none;
+    transition: color var(--transition);
+    letter-spacing: 0.3px;
+}
+
+.sidebar-action-link:hover {
+    color: var(--admin-text);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+.admin-main {
+    margin-left: var(--admin-sidebar-width);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.admin-topbar {
+    height: var(--admin-topbar-height);
+    background: var(--admin-white);
+    border-bottom: 1px solid var(--admin-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.topbar-title {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--admin-text);
+}
+
+.admin-content {
+    padding: 32px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================
+   ALERTS
+   ============================================ */
+
+.admin-alert {
+    margin: 16px 32px 0;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+}
+
+.admin-alert svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.admin-alert-success {
+    background: #f0faf4;
+    border: 1px solid #c6e8d2;
+    color: var(--admin-success);
+}
+
+.admin-alert-error {
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    color: var(--admin-danger);
+}
+
+/* ============================================
+   STAT CARDS
+   ============================================ */
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--admin-white);
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    padding: 24px 20px;
+    transition: all var(--transition);
+}
+
+.stat-card:hover {
+    border-color: var(--admin-border-dark);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--admin-text-muted);
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    line-height: 1;
+}
+
+.stat-sub {
+    font-size: 0.72rem;
+    color: var(--admin-text-muted);
+    margin-top: 6px;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+
+.admin-card {
+    background: var(--admin-white);
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.admin-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-card-title {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--admin-text);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead tr {
+    background: var(--admin-bg);
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-table th {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--admin-text-muted);
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--admin-border);
+    font-size: 0.85rem;
+    color: var(--admin-text);
+    vertical-align: middle;
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+    background: #fafafa;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.btn-admin-primary {
+    background: var(--admin-text);
+    color: #ffffff;
+}
+
+.btn-admin-primary:hover {
+    background: var(--admin-accent-hover);
+}
+
+.btn-admin-outline {
+    background: transparent;
+    color: var(--admin-text);
+    border: 1px solid var(--admin-border-dark);
+}
+
+.btn-admin-outline:hover {
+    background: var(--admin-bg);
+    border-color: var(--admin-text);
+}
+
+.btn-admin-danger {
+    background: transparent;
+    color: var(--admin-danger);
+    border: 1px solid #fed7d7;
+}
+
+.btn-admin-danger:hover {
+    background: #fff5f5;
+}
+
+.btn-admin-ghost {
+    background: transparent;
+    color: var(--admin-text-light);
+    padding: 6px 10px;
+}
+
+.btn-admin-ghost:hover {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.badge-dark {
+    background: var(--admin-text);
+    color: #fff;
+}
+
+.badge-light {
+    background: var(--admin-bg);
+    color: var(--admin-text-light);
+    border: 1px solid var(--admin-border);
+}
+
+.badge-gold {
+    background: #fef9ec;
+    color: var(--admin-gold);
+    border: 1px solid #f5e4b3;
+}
+
+/* ============================================
+   FORMS
+   ============================================ */
+
+.admin-form-card {
+    background: var(--admin-white);
+    border: 1px solid var(--admin-border);
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 720px;
+    margin: auto;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.form-section-title {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--admin-text-muted);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--admin-text-light);
+    margin-bottom: 7px;
+    text-transform: uppercase;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--admin-border-dark);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--admin-text);
+    background: var(--admin-white);
+    outline: none;
+    transition: border-color var(--transition);
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--admin-text);
+}
+
+.form-input::placeholder {
+    color: var(--admin-text-muted);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 8px;
+    border-top: 1px solid var(--admin-border);
+}
+
+.form-error {
+    font-size: 0.75rem;
+    color: var(--admin-danger);
+    margin-top: 5px;
+}
+
+/* Checkbox grid for specs */
+.spec-check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    padding: 14px;
+    background: var(--admin-bg);
+    border-radius: 6px;
+    border: 1px solid var(--admin-border);
+    margin-top: 8px;
+}
+
+.spec-check-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--admin-text);
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background var(--transition);
+}
+
+.spec-check-item:hover {
+    background: #f0f0f0;
+}
+
+.spec-check-item input[type="checkbox"] {
+    accent-color: var(--admin-text);
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+/* Image preview */
+.img-preview {
+    width: 160px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--admin-border);
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* File input */
+.form-file {
+    font-size: 0.82rem;
+    color: var(--admin-text-light);
+}
+
+/* Relation display in table */
+.relation-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.relation-tag {
+    background: var(--admin-bg);
+    border: 1px solid var(--admin-border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    color: var(--admin-text-light);
+    font-weight: 400;
+}
+
+/* Pivot info */
+.pivot-info {
+    font-size: 0.7rem;
+    color: var(--admin-text-muted);
+    font-style: italic;
+}
+
+/* Empty state */
+.admin-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--admin-text-muted);
+}
+
+.admin-empty p {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+
+/* ============================================
+   PAGINATION
+   ============================================ */
+
+.admin-pagination {
+    padding: 24px;
+    border-top: 1px solid var(--admin-border);
+    display: flex;
+    justify-content: center;
+}
+
+/* Hide the 'Showing...' summary if present */
+.admin-pagination nav > div:first-child {
+    display: none !important;
+}
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    background: #fff;
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text-light);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    border-radius: 4px;
+    transition: all var(--transition);
+}
+
+.page-item.active .page-link {
+    background: var(--admin-text);
+    color: #fff;
+    border-color: var(--admin-text);
+}
+
+.page-item .page-link:hover:not(.active) {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    border-color: var(--admin-border-dark);
+}
+
+.page-item.disabled .page-link {
+    background: var(--admin-bg);
+    color: var(--admin-text-muted);
+    border-color: var(--admin-border);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+/* Fix for icons in pagination */
+.page-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Responsive utility */
+@media (max-width: 768px) {
+    .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+    .admin-content { padding: 20px; }
+}
+
+
